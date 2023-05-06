@@ -49,7 +49,7 @@ class MarketPage extends StatelessWidget {
                   return ListTile(
                     title: Text(data['name']),
                     subtitle: Text(
-                        '${data['category']} - ${data['price']} TL - Satıcı: ${userData['name']}'),
+                        '${data['category']} - ${data['price']} TL - Satıcı: ${data['userNameSurname']}'),
                     trailing: ElevatedButton.icon(
                       icon: Icon(Icons.local_offer),
                       label: Text('Teklif Ver'),
@@ -57,8 +57,9 @@ class MarketPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                OfferScreen(productId: data['product_id']),
+                            builder: (context) => OfferScreen(
+                              productId: data['product_id'],
+                            ),
                           ),
                         );
                       },

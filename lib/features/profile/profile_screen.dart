@@ -49,10 +49,14 @@ class _ProfileState extends State<Profile> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return circularProgressExtMeth();
             }
-            DocumentSnapshot<Object?> data = snapshot.data!;
-            final Map<String, dynamic> userData =
-                snapshot.data!.data() as Map<String, dynamic>;
 
+            // Eğer snapshot.data?.data() null değilse, 'userData' değerini atayın.
+            // Değilse, boş bir harita kullanın.
+            final Map<String, dynamic> userData = snapshot.data?.data() != null
+                ? snapshot.data!.data() as Map<String, dynamic>
+                : {};
+
+            // Geri kalan kodlar burada yer alacak
             return ListView(
               physics: BouncingScrollPhysics(),
               children: [

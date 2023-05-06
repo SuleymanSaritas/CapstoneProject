@@ -3,10 +3,12 @@ class Product {
   final String name;
   final String category;
   final int price;
+  final String userNameSurname;
 
   Product(
       {required this.product_id,
       required this.name,
       required this.category,
-      required this.price});
+      required this.price,
+      required this.userNameSurname});
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lego_market_app/product/products/products.dart';
@@ -13,6 +14,26 @@ class _AddProductPageState extends State<AddProductPage> {
   String? _productName;
   String? _category;
   String? _price;
+  String? _name_Surname;
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUserDetails();
+  }
+
+  Future<void> getCurrentUserDetails() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userData = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
+      setState(() {
+        _name_Surname = data['name surname'];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +127,14 @@ class _AddProductPageState extends State<AddProductPage> {
         name: _productName!,
         category: _category!,
         price: int.parse(_price!),
+        userNameSurname: _name_Surname!,
       );
       await products.doc(productId).set({
         'product_id': product.product_id,
         'name': product.name,
         'category': product.category,
         'price': product.price,
+        'userNameSurname': _name_Surname!,
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
