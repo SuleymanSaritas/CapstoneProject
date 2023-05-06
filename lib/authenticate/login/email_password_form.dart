@@ -103,7 +103,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
           .user;
 
       // ignore: deprecated_member_use
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("${user!.email} logged in with."),
         ),
@@ -116,7 +116,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
       // ignore: deprecated_member_use
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("${e.message}"),
         ),
@@ -124,7 +124,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
     } catch (e) {
       debugPrint(e.toString());
       // ignore: deprecated_member_use
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
               Text("There was a problem logging in with Email and Password"),
