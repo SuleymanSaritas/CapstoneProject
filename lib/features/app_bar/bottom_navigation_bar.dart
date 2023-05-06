@@ -5,6 +5,7 @@ import 'package:lego_market_app/features/home/home_screen.dart';
 import 'package:lego_market_app/features/orders/basket_screen.dart';
 import 'package:lego_market_app/features/orders/null_user_order.dart';
 import 'package:lego_market_app/features/profile/profile_screen.dart';
+import 'package:lego_market_app/features/info/info_screen.dart';
 
 import '../../../authenticate/auth_page/auth_type_selector.dart';
 
@@ -22,6 +23,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
     HomePage(),
     _auth.currentUser == null ? NullUserOrders() : BasketScreen(),
     _auth.currentUser == null ? AuthTypeSelector() : Profile(),
+    _auth.currentUser == null ? AuthTypeSelector() : InformationPage(),
   ];
 
   @override
@@ -55,6 +57,13 @@ class _BottomHomePageState extends State<BottomHomePage> {
             Icons.account_circle_rounded,
           ),
           label: "PROFILE",
+          backgroundColor: myBackgroundColor,
+        ),
+        BottomNavigationBarItem(
+          icon: buildBottomIcon(
+            Icons.help,
+          ),
+          label: "INFO",
           backgroundColor: myBackgroundColor,
         ),
       ],
