@@ -6,6 +6,6 @@ class Utils {
     @required String? text,
   }) {
     // ignore: deprecated_member_use
-    Scaffold.of(context).showSnackBar(SnackBar(content: Text(text!)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text!)));
   }
 }

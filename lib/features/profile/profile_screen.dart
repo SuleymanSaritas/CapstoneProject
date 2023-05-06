@@ -10,6 +10,8 @@ import '../../../core/widget/color.dart';
 import '../../../core/widget/gradient_container.dart';
 import '../../../core/widget/main_appBar.dart';
 import '../orders/orders_screen.dart';
+import '../add_product/add_product_screen.dart';
+import '../profile/my_products_screen.dart';
 import 'profile_build_data.dart';
 
 class Profile extends StatefulWidget {
@@ -106,6 +108,8 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     ordersButton(),
+                    addProductButton(),
+                    myProductsButton(),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                       child: ElevatedButton(
@@ -179,6 +183,72 @@ class _ProfileState extends State<Profile> {
               ],
             );
           },
+        ),
+      ),
+    );
+  }
+
+  Padding addProductButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+      child: ElevatedButton(
+        onPressed: () {
+          navigatorPush(
+            context,
+            AddProductPage(),
+          );
+        },
+        child: ListTile(
+          leading: Icon(
+            Icons.add_box,
+            size: 27,
+            color: buildColor(),
+          ),
+          title: Text(
+            "Add Product",
+            style: TextStyle(
+              fontSize: 20,
+              color: buildColor(),
+            ),
+          ),
+        ),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+            white12Color,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding myProductsButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+      child: ElevatedButton(
+        onPressed: () {
+          navigatorPush(
+            context,
+            ProductListPage(),
+          );
+        },
+        child: ListTile(
+          leading: Icon(
+            Icons.shopping_bag,
+            size: 27,
+            color: buildColor(),
+          ),
+          title: Text(
+            "My Products",
+            style: TextStyle(
+              fontSize: 20,
+              color: buildColor(),
+            ),
+          ),
+        ),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+            white12Color,
+          ),
         ),
       ),
     );
