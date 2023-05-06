@@ -9,9 +9,9 @@ import '../../../core/components/row/profile_row.dart';
 import '../../../core/widget/color.dart';
 import '../../../core/widget/gradient_container.dart';
 import '../../../core/widget/main_appBar.dart';
-import '../orders/orders_screen.dart';
 import '../add_product/add_product_screen.dart';
 import '../profile/my_products_screen.dart';
+import 'my_offers_screen.dart';
 import 'profile_build_data.dart';
 
 class Profile extends StatefulWidget {
@@ -50,6 +50,8 @@ class _ProfileState extends State<Profile> {
               return circularProgressExtMeth();
             }
             DocumentSnapshot<Object?> data = snapshot.data!;
+            final Map<String, dynamic> userData =
+                snapshot.data!.data() as Map<String, dynamic>;
 
             return ListView(
               physics: BouncingScrollPhysics(),
@@ -67,7 +69,9 @@ class _ProfileState extends State<Profile> {
                         children: [
                           accountIconExtMeth(),
                           Text(
-                            data['name surname'],
+                            userData.containsKey('name surname')
+                                ? userData['name surname']
+                                : '',
                             style: TextStyle(
                               fontSize: 23,
                               color: whiteColor,
@@ -83,7 +87,7 @@ class _ProfileState extends State<Profile> {
                       60,
                       Alignment.centerLeft,
                       buildProfileRow(
-                        data['email'],
+                        userData.containsKey('email') ? userData['email'] : '',
                         Icons.mail,
                       ),
                     ),
@@ -93,7 +97,7 @@ class _ProfileState extends State<Profile> {
                       60,
                       Alignment.centerLeft,
                       buildProfileRow(
-                        data['phone'],
+                        userData.containsKey('phone') ? userData['phone'] : '',
                         Icons.phone,
                       ),
                     ),
@@ -103,11 +107,13 @@ class _ProfileState extends State<Profile> {
                       60,
                       Alignment.centerLeft,
                       buildProfileRow(
-                        data['address'],
+                        userData.containsKey('address')
+                            ? userData['address']
+                            : '',
                         Icons.home,
                       ),
                     ),
-                    ordersButton(),
+                    myOffersButton(),
                     addProductButton(),
                     myProductsButton(),
                     Padding(
@@ -221,6 +227,39 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Padding myOffersButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+      child: ElevatedButton(
+        onPressed: () {
+          navigatorPush(
+            context,
+            MyOffersScreen(),
+          );
+        },
+        child: ListTile(
+          leading: Icon(
+            Icons.local_offer,
+            size: 27,
+            color: buildColor(),
+          ),
+          title: Text(
+            "My Offers",
+            style: TextStyle(
+              fontSize: 20,
+              color: buildColor(),
+            ),
+          ),
+        ),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+            white12Color,
+          ),
+        ),
+      ),
+    );
+  }
+
   Padding myProductsButton() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -239,39 +278,6 @@ class _ProfileState extends State<Profile> {
           ),
           title: Text(
             "My Products",
-            style: TextStyle(
-              fontSize: 20,
-              color: buildColor(),
-            ),
-          ),
-        ),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-            white12Color,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Padding ordersButton() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-      child: ElevatedButton(
-        onPressed: () {
-          navigatorPush(
-            context,
-            OrdersScreen(),
-          );
-        },
-        child: ListTile(
-          leading: Icon(
-            Icons.shopping_basket,
-            size: 27,
-            color: buildColor(),
-          ),
-          title: Text(
-            "Orders",
             style: TextStyle(
               fontSize: 20,
               color: buildColor(),

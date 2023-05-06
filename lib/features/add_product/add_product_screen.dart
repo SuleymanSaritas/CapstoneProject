@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lego_market_app/product/products/products.dart';
 
 class AddProductPage extends StatefulWidget {
   @override
@@ -99,10 +100,18 @@ class _AddProductPageState extends State<AddProductPage> {
       // Ürün verilerini Firestore'a kaydetme
       CollectionReference products =
           FirebaseFirestore.instance.collection('products');
-      await products.add({
-        'name': _productName,
-        'category': _category,
-        'price': int.parse(_price as String),
+      String productId = products.doc().id;
+      Product product = Product(
+        product_id: productId,
+        name: _productName!,
+        category: _category!,
+        price: int.parse(_price!),
+      );
+      await products.doc(productId).set({
+        'product_id': product.product_id,
+        'name': product.name,
+        'category': product.category,
+        'price': product.price,
       });
 
       ScaffoldMessenger.of(context).showSnackBar(

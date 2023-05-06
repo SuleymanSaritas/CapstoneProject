@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lego_market_app/core/components/icon/bottom_icon.dart';
 import 'package:lego_market_app/features/home/home_screen.dart';
-import 'package:lego_market_app/features/orders/basket_screen.dart';
 import 'package:lego_market_app/features/orders/null_user_order.dart';
+import 'package:lego_market_app/features/orders/market_screen.dart';
 import 'package:lego_market_app/features/profile/profile_screen.dart';
 import 'package:lego_market_app/features/info/info_screen.dart';
 
@@ -21,7 +21,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
   int _selectedIndex = 0;
   final tabs = [
     HomePage(),
-    _auth.currentUser == null ? NullUserOrders() : BasketScreen(),
+    _auth.currentUser == null ? NullUserOrders() : MarketPage(),
     _auth.currentUser == null ? AuthTypeSelector() : Profile(),
     _auth.currentUser == null ? AuthTypeSelector() : InformationPage(),
   ];
@@ -49,7 +49,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
           icon: buildBottomIcon(
             Icons.shopping_cart,
           ),
-          label: "BASKET",
+          label: "MARKET",
           backgroundColor: myBackgroundColor,
         ),
         BottomNavigationBarItem(
