@@ -93,7 +93,13 @@ class ProductDetailPage extends StatelessWidget {
 
                         return ListTile(
                           title: Text('Teklif: ${offer['price']} TL'),
-                          subtitle: Text('Açıklama: ${offer['description']}'),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Açıklama: ${offer['description']}'),
+                              Text('Teklif veren: ${offer['user_email']}'),
+                            ],
+                          ),
                         );
                       },
                     );

@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lego_market_app/core/components/icon/bottom_icon.dart';
 import 'package:lego_market_app/features/home/home_screen.dart';
+import 'package:lego_market_app/features/info/food_advice_screen.dart';
 import 'package:lego_market_app/features/orders/null_user_order.dart';
 import 'package:lego_market_app/features/orders/market_screen.dart';
 import 'package:lego_market_app/features/profile/profile_screen.dart';
-import 'package:lego_market_app/features/info/info_screen.dart';
+import 'package:lego_market_app/features/info/recyle_screen.dart';
 
 import '../../../authenticate/auth_page/auth_type_selector.dart';
 
@@ -23,7 +24,8 @@ class _BottomHomePageState extends State<BottomHomePage> {
     HomePage(),
     _auth.currentUser == null ? NullUserOrders() : MarketPage(),
     _auth.currentUser == null ? AuthTypeSelector() : Profile(),
-    _auth.currentUser == null ? AuthTypeSelector() : InformationPage(),
+    _auth.currentUser == null ? AuthTypeSelector() : VeggieListPage(),
+    _auth.currentUser == null ? AuthTypeSelector() : FoodListPage(),
   ];
 
   @override
@@ -64,6 +66,13 @@ class _BottomHomePageState extends State<BottomHomePage> {
             Icons.help,
           ),
           label: "INFO",
+          backgroundColor: myBackgroundColor,
+        ),
+        BottomNavigationBarItem(
+          icon: buildBottomIcon(
+            Icons.food_bank_sharp,
+          ),
+          label: "FOOD ADVICE",
           backgroundColor: myBackgroundColor,
         ),
       ],
