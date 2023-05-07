@@ -11,6 +11,9 @@ class MarketPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Market'),
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange[300],
+        elevation: 0, // Matlık için gerekli
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: products.snapshots(),
@@ -44,8 +47,6 @@ class MarketPage extends StatelessWidget {
                     );
                   }
 
-                  Map<String, dynamic> userData = userSnapshot.data!.docs.first
-                      .data() as Map<String, dynamic>;
                   return ListTile(
                     title: Text(data['name']),
                     subtitle: Text(

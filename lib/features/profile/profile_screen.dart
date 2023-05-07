@@ -8,8 +8,11 @@ import 'package:lego_market_app/features/app_bar/bottom_navigation_bar.dart';
 import '../../../core/components/row/profile_row.dart';
 import '../../../core/widget/color.dart';
 import '../../../core/widget/gradient_container.dart';
-import '../../../core/widget/main_appBar.dart';
+import '../../authenticate/auth_page/auth_type_selector.dart';
+import '../../authenticate/register/register_page.dart';
 import '../add_product/add_product_screen.dart';
+import '../home/home_screen.dart';
+import '../orders/custombackbutton.dart';
 import '../profile/my_products_screen.dart';
 import 'my_offers_screen.dart';
 import 'profile_build_data.dart';
@@ -22,10 +25,18 @@ class Profile extends StatefulWidget {
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class _ProfileState extends State<Profile> {
-  final _usersStream = FirebaseFirestore.instance
-      .collection('users')
-      .doc(_auth.currentUser!.uid.toString())
-      .snapshots();
+  late Stream<DocumentSnapshot> _usersStream;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_auth.currentUser != null) {
+      _usersStream = FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.currentUser!.uid.toString())
+          .snapshots();
+    }
+  }
 
   final Color transparentColor = Colors.transparent;
   final Color white12Color = Colors.white12;
@@ -34,8 +45,12 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    if (_auth.currentUser == null) {
+      // Kullanıcı oturum açmamışsa Register sayfasına yönlendirin
+      return AuthTypeSelector();
+    }
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.blue[900],
       appBar: mainAppBarExt(),
       body: buildGradientContainer(
         StreamBuilder<DocumentSnapshot>(
@@ -141,7 +156,7 @@ class _ProfileState extends State<Profile> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => BottomHomePage(),
+                                        builder: (context) => NavigationPage(),
                                       ),
                                     );
                                   },
@@ -330,14 +345,18 @@ class _ProfileState extends State<Profile> {
   }
 
   AppBar mainAppBarExt() {
-    return mainAppBar(
-      Text(
+    return AppBar(
+      title: Text(
         "Profile",
         style: TextStyle(
           fontSize: 24,
         ),
       ),
-      false,
+      centerTitle: true,
+      backgroundColor: Colors.deepOrange[300],
+      elevation: 0, // Matlık için gerekli
+      automaticallyImplyLeading: false, // Bu satırı ekleyin
+      leading: CustomBackButton(), // Bu satırı ekleyin
     );
   }
 }

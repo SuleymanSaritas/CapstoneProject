@@ -10,7 +10,7 @@ class ProductListPage extends StatefulWidget {
 }
 
 class _ProductListPageState extends State<ProductListPage> {
-  String? _name_Surname;
+  String? _nameSurname;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _ProductListPageState extends State<ProductListPage> {
           .get();
       Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
       setState(() {
-        _name_Surname = data['name surname'];
+        _nameSurname = data['name surname'];
       });
     }
   }
@@ -108,7 +108,7 @@ class _ProductListPageState extends State<ProductListPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_name_Surname == null) {
+    if (_nameSurname == null) {
       return Scaffold(
         appBar: AppBar(title: Text('Ürünlerim')),
         body: Center(child: CircularProgressIndicator()),
@@ -121,10 +121,13 @@ class _ProductListPageState extends State<ProductListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Ürünlerim'),
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange[300],
+        elevation: 0, // Matlık için gerekli
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: products
-            .where('userNameSurname', isEqualTo: _name_Surname)
+            .where('userNameSurname', isEqualTo: _nameSurname)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {

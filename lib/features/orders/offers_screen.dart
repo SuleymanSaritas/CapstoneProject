@@ -24,6 +24,9 @@ class _OfferScreenState extends State<OfferScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Teklif Verme Sayfası'),
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange[300],
+        elevation: 0, // Matlık için gerekli
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),

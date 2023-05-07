@@ -15,6 +15,9 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
       return Scaffold(
         appBar: AppBar(
           title: Text('My Offers'),
+          centerTitle: true,
+          backgroundColor: Colors.deepOrange[300],
+          elevation: 0, // Matlık için gerekli
         ),
         body: Center(
           child: Text('You need to sign in to view your offers.'),
@@ -25,6 +28,9 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Offers'),
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange[300],
+        elevation: 0, // Matlık için gerekli
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -67,10 +73,35 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
                   Map<String, dynamic> productData =
                       productSnapshot.data!.data() as Map<String, dynamic>;
 
-                  return ListTile(
-                    title: Text(productData['name']),
-                    subtitle: Text(
-                        'Kategori: ${productData['category']}\nTeklif: ${data['price']} TL\nAçıklama: ${data['description']}'),
+                  return Dismissible(
+                    key: Key(document.id),
+                    onDismissed: (direction) {
+                      FirebaseFirestore.instance
+                          .collection('offers')
+                          .doc(document.id)
+                          .delete()
+                          .then((value) => print('Offer deleted'))
+                          .catchError((error) =>
+                              print('Failed to delete offer: $error'));
+                    },
+                    child: ListTile(
+                      title: Text(productData['name']),
+                      subtitle: Text(
+                          'Kategori: ${productData['category']}\nTeklif: ${data['price']} TL\nAçıklama: ${data['description']}'),
+                    ),
+                    background: Container(
+                      color: Colors.red,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   );
                 },
               );

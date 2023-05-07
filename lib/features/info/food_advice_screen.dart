@@ -24,6 +24,9 @@ class _FoodListPageState extends State<FoodListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('How to use excess vegetables'),
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange[300],
+        elevation: 0, // Matlık için gerekli
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: fetchVeggies(),

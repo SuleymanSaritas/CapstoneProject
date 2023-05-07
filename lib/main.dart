@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lego_market_app/features/app_bar/bottom_navigation_bar.dart';
+
+import 'features/home/home_screen.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.system,
-      home: BottomHomePage(),
+      home: NavigationPage(),
     );
   }
 }

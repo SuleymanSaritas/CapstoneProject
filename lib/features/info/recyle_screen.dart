@@ -15,6 +15,9 @@ class _VeggieListPageState extends State<VeggieListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('How to recycle your vegetables'),
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange[300],
+        elevation: 0, // Matlık için gerekli
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _veggiesCollection.snapshots(),

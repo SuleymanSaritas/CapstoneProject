@@ -14,6 +14,9 @@ class ProductDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Ürün Detayı'),
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange[300],
+        elevation: 0, // Matlık için gerekli
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: products.doc(productId).get(),

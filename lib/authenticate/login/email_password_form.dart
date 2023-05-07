@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:lego_market_app/core/components/navigator/push_replacement.dart';
 import 'package:lego_market_app/features/app_bar/bottom_navigation_bar.dart';
+import 'package:lego_market_app/features/home/home_screen.dart';
 
 class EmailPasswordForm extends StatefulWidget {
   @override
@@ -111,7 +112,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
 
       pushReplacement(
         context,
-        BottomHomePage(),
+        NavigationPage(),
       );
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
