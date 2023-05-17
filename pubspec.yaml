@@ -52,8 +52,8 @@ flutter_native_splash:
   
   android: true
   web: true 
-  color: "#141369" 
-  image: assets/splash.png
+  color: "#00FF00" 
+  image: assets/images/splash.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -72,4 +72,4 @@ flutter:
     - assets/images/profile_image.png
     - assets/images/info_image.png
     - assets/images/food_advice_image.png
- 
+    - assets/images/splash.png
