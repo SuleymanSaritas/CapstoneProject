@@ -53,7 +53,7 @@ class NavigationPage extends StatelessWidget {
                   context,
                   'Food Advice',
                   'assets/images/food_advice_image.png',
-                  FoodListPage(),
+                  NewsPage(),
                 ),
               ),
             ],

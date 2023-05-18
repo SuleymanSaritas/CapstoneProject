@@ -17,7 +17,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
   int? _condition, _color, _smell, _texture;
 
   final Map<String, Widget Function()> _solutionRoutes = {
-    'Food': () => FoodListPage(),
+    'Food': () => NewsPage(),
     'Donate': () => DonationPage(),
     'Sell': () => AddProductPage(),
     'Recycle': () => DonationPage(),

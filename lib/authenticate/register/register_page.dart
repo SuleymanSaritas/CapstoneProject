@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:lego_market_app/features/app_bar/bottom_navigation_bar.dart';
 import 'package:lego_market_app/features/home/home_screen.dart';
 
 import '../../core/widget/gradient_container.dart';
@@ -229,6 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'email': emailController.text,
           'phone': phoneController.text,
           'address': addressController.text,
+          'your_benefit': [],
         };
         User? name = _auth.currentUser;
         CollectionReference usersRef = firestore.collection('users');

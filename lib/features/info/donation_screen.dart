@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DonationPage extends StatefulWidget {
@@ -30,6 +31,31 @@ class _DonationPageState extends State<DonationPage> {
         );
       },
     );
+  }
+
+  Future<void> _addBenefitToCurrentUser(
+      String veggie, double weight, double benefit) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userData = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
+      final donationData = {
+        'veggie': veggie,
+        'weight': weight,
+        'benefit': benefit,
+        'date': DateTime.now(), // Adding date of donation
+      };
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .update({
+        'your_benefit': FieldValue.arrayUnion([donationData])
+      });
+    }
   }
 
   @override
@@ -199,6 +225,8 @@ class _DonationPageState extends State<DonationPage> {
                               double.tryParse(weightController.text) ??
                                   0; // Parses weight as a double
                           _showBenefitDialog(weight, veggieValue);
+                          _addBenefitToCurrentUser(_chosenVeggie!, weight,
+                              weight * veggieValue); // Add this line
                         },
                         child: Text('Calculate Benefit'),
                       ),
