@@ -25,6 +25,15 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 class _ProfileState extends State<Profile> {
   late Stream<DocumentSnapshot> _usersStream;
 
+  final Color backgroundColor = Color(0xFFECECEC);
+  final Color redColor = Colors.red;
+  final Color greenColor = Colors.green;
+  final Color whiteColor = Colors.white;
+  final Color blackColor = Colors.black;
+
+  final Color transparentColor = Colors.blue;
+  final Color darkerOrangeColor = Colors.deepOrange[700] ?? Colors.deepOrange;
+
   @override
   void initState() {
     super.initState();
@@ -36,180 +45,120 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  final Color transparentColor = Colors.transparent;
-  final Color white12Color = Colors.white12;
-  final Color redColor = Colors.red;
-  final Color whiteColor = Colors.white;
-
   @override
   Widget build(BuildContext context) {
     if (_auth.currentUser == null) {
-      // Kullanıcı oturum açmamışsa Register sayfasına yönlendirin
       return AuthTypeSelector();
     }
     return Scaffold(
-      backgroundColor: Colors.blue[900],
+      backgroundColor: backgroundColor,
       appBar: mainAppBarExt(),
-      body: buildGradientContainer(
-        StreamBuilder<DocumentSnapshot>(
-          stream: _usersStream,
-          builder:
-              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text('Something went wrong');
-            }
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: _usersStream,
+        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return circularProgressExtMeth();
-            }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return circularProgressExtMeth();
+          }
 
-            // Eğer snapshot.data?.data() null değilse, 'userData' değerini atayın.
-            // Değilse, boş bir harita kullanın.
-            final Map<String, dynamic> userData = snapshot.data?.data() != null
-                ? snapshot.data!.data() as Map<String, dynamic>
-                : {};
+          final Map<String, dynamic>? userData = snapshot.data?.data() as Map<String, dynamic>?;
 
-            // Geri kalan kodlar burada yer alacak
-            return ListView(
-              physics: BouncingScrollPhysics(),
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    buildProfileData(
-                      transparentColor,
-                      80,
-                      120,
-                      Alignment.center,
-                      Row(
-                        children: [
-                          accountIconExtMeth(),
-                          Text(
-                            userData.containsKey('name surname')
-                                ? userData['name surname']
-                                : '',
-                            style: TextStyle(
-                              fontSize: 23,
-                              color: whiteColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    buildProfileData(
-                      transparentColor,
-                      80,
-                      60,
-                      Alignment.centerLeft,
-                      buildProfileRow(
-                        userData.containsKey('email') ? userData['email'] : '',
-                        Icons.mail,
-                      ),
-                    ),
-                    buildProfileData(
-                      transparentColor,
-                      80,
-                      60,
-                      Alignment.centerLeft,
-                      buildProfileRow(
-                        userData.containsKey('phone') ? userData['phone'] : '',
-                        Icons.phone,
-                      ),
-                    ),
-                    buildProfileData(
-                      transparentColor,
-                      80,
-                      60,
-                      Alignment.centerLeft,
-                      buildProfileRow(
-                        userData.containsKey('address')
-                            ? userData['address']
-                            : '',
-                        Icons.home,
-                      ),
-                    ),
-                    myOffersButton(),
-                    addProductButton(),
-                    myProductsButton(),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: const Text(
-                                  "Are you sure you want to log out?"),
-                              content: Icon(
-                                Icons.warning,
-                                size: 40,
-                                color: redColor,
-                              ),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    await FirebaseAuth.instance.signOut();
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => NavigationPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text('LOG OUT'),
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                      Colors.red.shade700,
-                                    ),
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () => navigatorPop(context),
-                                  child: Text('CANCEL'),
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                      Colors.green.shade700,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.logout,
-                            size: 27,
-                            color: buildColor(),
-                          ),
-                          title: Text(
-                            "Log out",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: buildColor(),
-                            ),
+          return ListView(
+            physics: BouncingScrollPhysics(),
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  buildProfileData(
+                    whiteColor
+                ,
+                    80,
+                    120,
+                    Alignment.center,
+                    Row(
+                      children: [
+                        accountIconExtMeth(),
+                        Text(
+                          userData?['name surname'] ?? '',
+                          style: TextStyle(
+                            fontSize: 23,
+                            color: blackColor
+                        ,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            white12Color,
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
-            );
-          },
-        ),
+                  ),
+                  buildProfileData(
+                    whiteColor
+                ,
+                    80,
+                    60,
+                    Alignment.centerLeft,
+                    buildProfileRow(
+                      userData?['email'] ?? '',
+                      Icons.mail,
+                    ),
+                  ),
+                  buildProfileData(
+                    whiteColor
+                ,
+                    80,
+                    60,
+                    Alignment.centerLeft,
+                    buildProfileRow(
+                      userData?['phone'] ?? '',
+                      Icons.phone,
+                    ),
+                  ),
+                  buildProfileData(
+                    whiteColor
+                ,
+                    80,
+                    60,
+                    Alignment.centerLeft,
+                    buildProfileRow(
+                      userData?['address'] ?? '',
+                      Icons.home,
+                    ),
+                  ),
+                  myOffersButton(),
+                  addProductButton(),
+                  myProductsButton(),
+                  logoutButton(),
+                ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }
+
+  Widget buildProfileRow(String data, IconData icon) {
+  return Row(
+    children: [
+      Icon(
+        icon,
+        size: 20,
+        color: whiteColor,
+      ),
+      SizedBox(width: 10),
+      Text(
+        data,
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.black, 
+        ),
+      ),
+    ],
+  );
+}
 
   Padding addProductButton() {
     return Padding(
@@ -225,19 +174,21 @@ class _ProfileState extends State<Profile> {
           leading: Icon(
             Icons.add_box,
             size: 27,
-            color: buildColor(),
+            color: whiteColor
+        ,
           ),
           title: Text(
             "Add Product",
             style: TextStyle(
               fontSize: 20,
-              color: buildColor(),
+              color: whiteColor
+          ,
             ),
           ),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
-            white12Color,
+            greenColor,
           ),
         ),
       ),
@@ -258,19 +209,22 @@ class _ProfileState extends State<Profile> {
           leading: Icon(
             Icons.local_offer,
             size: 27,
-            color: buildColor(),
+            color: whiteColor
+        ,
           ),
           title: Text(
             "My Offers",
             style: TextStyle(
               fontSize: 20,
-              color: buildColor(),
+              color: whiteColor
+          ,
+              fontFamily: 'Roboto',
             ),
           ),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
-            white12Color,
+            greenColor,
           ),
         ),
       ),
@@ -291,19 +245,91 @@ class _ProfileState extends State<Profile> {
           leading: Icon(
             Icons.shopping_bag,
             size: 27,
-            color: buildColor(),
+            color: whiteColor
+        ,
           ),
           title: Text(
             "My Products",
             style: TextStyle(
               fontSize: 20,
-              color: buildColor(),
+              color: whiteColor
+          ,
             ),
           ),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
-            white12Color,
+            greenColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding logoutButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+      child: ElevatedButton(
+        onPressed: () {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text("Are you sure you want to log out?"),
+              content: Icon(
+                Icons.warning,
+                size: 40,
+                color: redColor,
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NavigationPage(),
+                      ),
+                    );
+                  },
+                  child: Text('LOG OUT'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      redColor,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () => navigatorPop(context),
+                  child: Text('CANCEL'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      greenColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        child: ListTile(
+          leading: Icon(
+            Icons.logout,
+            size: 27,
+            color: whiteColor
+        ,
+          ),
+          title: Text(
+            "Log out",
+            style: TextStyle(
+              fontSize: 20,
+              color: whiteColor
+          ,
+            ),
+          ),
+        ),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+            redColor,
           ),
         ),
       ),
@@ -328,7 +354,8 @@ class _ProfileState extends State<Profile> {
         child: Icon(
           Icons.account_circle_rounded,
           size: 110,
-          color: whiteColor,
+          color: whiteColor
+      ,
         ),
       ),
     );
@@ -348,13 +375,14 @@ class _ProfileState extends State<Profile> {
         "Profile",
         style: TextStyle(
           fontSize: 24,
+          fontFamily: 'Roboto',
         ),
       ),
       centerTitle: true,
-      backgroundColor: Colors.deepOrange[300],
-      elevation: 0, // Matlık için gerekli
-      automaticallyImplyLeading: false, // Bu satırı ekleyin
-      leading: CustomBackButton(), // Bu satırı ekleyin
+      backgroundColor: darkerOrangeColor,
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      leading: CustomBackButton(),
     );
   }
 }

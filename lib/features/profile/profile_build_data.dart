@@ -16,6 +16,7 @@ buildProfileData(
       child: widget,
       decoration: BoxDecoration(
         color: color,
+        borderRadius: BorderRadius.circular(10), // Added for a softer look
       ),
     ),
   );
