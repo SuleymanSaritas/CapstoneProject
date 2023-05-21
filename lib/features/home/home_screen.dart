@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lego_market_app/features/info/food_advice_screen.dart';
+import 'package:lego_market_app/features/info/news_screen.dart';
 import 'package:lego_market_app/features/orders/market_screen.dart';
 import 'package:lego_market_app/features/profile/profile_screen.dart';
-import 'package:lego_market_app/features/info/recyle_screen.dart';
+import 'package:lego_market_app/features/info/decision_screen.dart';
 
 class NavigationPage extends StatelessWidget {
   @override
@@ -51,8 +51,8 @@ class NavigationPage extends StatelessWidget {
               Expanded(
                 child: _buildNavigationButton(
                   context,
-                  'Food Advice',
-                  'assets/images/food_advice_image.png',
+                  'Farm Academy',
+                  'assets/images/farm_academy_image.png',
                   NewsPage(),
                 ),
               ),

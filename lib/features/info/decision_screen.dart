@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lego_market_app/features/info/donation_screen.dart';
+import 'package:lego_market_app/features/info/recycle_solution_screen.dart';
 
 import '../add_product/add_product_screen.dart';
-import 'food_advice_screen.dart';
+import 'compost_solution_screen.dart';
+import 'cook_recipes_screen.dart';
 
 class VeggieListPage extends StatefulWidget {
   @override
@@ -16,16 +18,17 @@ class _VeggieListPageState extends State<VeggieListPage> {
   String? _chosenVeggie;
   int? _condition, _color, _smell, _texture;
 
-  final Map<String, Widget Function()> _solutionRoutes = {
-    'Food': () => NewsPage(),
-    'Donate': () => DonationPage(),
-    'Sell': () => AddProductPage(),
-    'Recycle': () => DonationPage(),
-    // Diğer çözümler ve sayfaları buraya ekleyin
-  };
-
   @override
   Widget build(BuildContext context) {
+    Map<String, Widget Function()> _solutionRoutes = {
+      'Cook': () => CookRecipesPage(product: _chosenVeggie),
+      'Donate': () => DonationPage(),
+      'Sell': () => AddProductPage(),
+      'Compost': () => CompostSolutionPage(product: _chosenVeggie),
+      'Recycle': () => RecycleSolutionPage(product: _chosenVeggie),
+
+      // Diğer çözümler ve sayfaları buraya ekleyin
+    };
     return Scaffold(
       appBar: AppBar(
         title: Text('Take Advantage'),
@@ -96,9 +99,11 @@ class _VeggieListPageState extends State<VeggieListPage> {
                     ).toList(),
                     hint: Text("Choose a Vegetable"),
                     onChanged: (String? value) {
-                      setState(() {
-                        _chosenVeggie = value;
-                      });
+                      if (value != null) {
+                        setState(() {
+                          _chosenVeggie = value;
+                        });
+                      }
                     },
                   ),
                 ],
@@ -201,6 +206,16 @@ class _VeggieListPageState extends State<VeggieListPage> {
                       totalScore > chosenVeggie['threshold']
                           ? List<String>.from(chosenVeggie['best_option'])
                           : List<String>.from(chosenVeggie['worst_option']);
+                  if (_solutionRoutes.containsKey('Recycle')) {
+                    if (_chosenVeggie != null) {
+                      _solutionRoutes['Recycle'] =
+                          () => RecycleSolutionPage(product: _chosenVeggie);
+                      _solutionRoutes['Compost'] =
+                          () => CompostSolutionPage(product: _chosenVeggie);
+                      _solutionRoutes['Cook'] =
+                          () => CookRecipesPage(product: _chosenVeggie);
+                    }
+                  }
 
                   showDialog(
                     context: context,
