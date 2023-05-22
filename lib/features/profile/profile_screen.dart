@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:lego_market_app/core/components/navigator/pop.dart';
 import 'package:lego_market_app/core/components/navigator/push.dart';
 
-import '../../../core/components/row/profile_row.dart';
-import '../../../core/widget/color.dart';
-import '../../../core/widget/gradient_container.dart';
 import '../../authenticate/auth_page/auth_type_selector.dart';
 import '../add_product/add_product_screen.dart';
 import '../home/home_screen.dart';
 import '../orders/custombackbutton.dart';
 import '../profile/my_products_screen.dart';
+import 'my_benefit_history.dart';
 import 'my_offers_screen.dart';
-import 'profile_build_data.dart';
+// import 'profile_build_data.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -24,7 +22,6 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class _ProfileState extends State<Profile> {
   late Stream<DocumentSnapshot> _usersStream;
-
   final Color backgroundColor = Color(0xFFECECEC);
   final Color redColor = Colors.red;
   final Color greenColor = Colors.green;
@@ -51,114 +48,90 @@ class _ProfileState extends State<Profile> {
       return AuthTypeSelector();
     }
     return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: mainAppBarExt(),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: _usersStream,
-        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              child: Image.asset(
+                  'assets/images/your_image.png'), // <-- Change 'assets/your_image.png' with your image path
+            ),
+            Container(
+              padding: EdgeInsets.all(8),
+              child: StreamBuilder<DocumentSnapshot>(
+                stream: _usersStream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return circularProgressExtMeth();
-          }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
 
-          final Map<String, dynamic>? userData = snapshot.data?.data() as Map<String, dynamic>?;
+                  final Map<String, dynamic>? userData =
+                      snapshot.data?.data() as Map<String, dynamic>?;
 
-          return ListView(
-            physics: BouncingScrollPhysics(),
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                  return Column(
+                    children: [
+                      buildProfileData(
+                          "Name Surname", userData?['name surname'] ?? ''),
+                      buildProfileData("Email", userData?['email'] ?? ''),
+                      buildProfileData("Phone", userData?['phone'] ?? ''),
+                      buildProfileData("Address", userData?['address'] ?? ''),
+                    ],
+                  );
+                },
+              ),
+            ),
+            Divider(height: 40, color: Colors.grey),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  buildProfileData(
-                    whiteColor
-                ,
-                    80,
-                    120,
-                    Alignment.center,
-                    Row(
-                      children: [
-                        accountIconExtMeth(),
-                        Text(
-                          userData?['name surname'] ?? '',
-                          style: TextStyle(
-                            fontSize: 23,
-                            color: blackColor
-                        ,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  buildProfileData(
-                    whiteColor
-                ,
-                    80,
-                    60,
-                    Alignment.centerLeft,
-                    buildProfileRow(
-                      userData?['email'] ?? '',
-                      Icons.mail,
-                    ),
-                  ),
-                  buildProfileData(
-                    whiteColor
-                ,
-                    80,
-                    60,
-                    Alignment.centerLeft,
-                    buildProfileRow(
-                      userData?['phone'] ?? '',
-                      Icons.phone,
-                    ),
-                  ),
-                  buildProfileData(
-                    whiteColor
-                ,
-                    80,
-                    60,
-                    Alignment.centerLeft,
-                    buildProfileRow(
-                      userData?['address'] ?? '',
-                      Icons.home,
-                    ),
-                  ),
-                  myOffersButton(),
                   addProductButton(),
+                  myOffersButton(),
                   myProductsButton(),
+                  myBenefitHistoryButton(),
                   logoutButton(),
                 ],
               ),
-            ],
-          );
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget buildProfileRow(String data, IconData icon) {
-  return Row(
-    children: [
-      Icon(
-        icon,
-        size: 20,
-        color: whiteColor,
+  Widget buildProfileData(String title, String data) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, width: 1),
+        borderRadius: BorderRadius.circular(10),
       ),
-      SizedBox(width: 10),
-      Text(
-        data,
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.black, 
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            '$title: ',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              data,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
       ),
-    ],
-  );
-}
+    );
+  }
 
   Padding addProductButton() {
     return Padding(
@@ -173,16 +146,14 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.add_box,
-            size: 27,
-            color: whiteColor
-        ,
+            size: 20, // İkon boyutunu küçült
+            color: whiteColor,
           ),
           title: Text(
             "Add Product",
             style: TextStyle(
-              fontSize: 20,
-              color: whiteColor
-          ,
+              fontSize: 16, // Yazı boyutunu küçült
+              color: whiteColor,
             ),
           ),
         ),
@@ -208,16 +179,14 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.local_offer,
-            size: 27,
-            color: whiteColor
-        ,
+            size: 20, // İkon boyutunu küçült
+            color: whiteColor,
           ),
           title: Text(
             "My Offers",
             style: TextStyle(
-              fontSize: 20,
-              color: whiteColor
-          ,
+              fontSize: 16, // Yazı boyutunu küçült
+              color: whiteColor,
               fontFamily: 'Roboto',
             ),
           ),
@@ -244,16 +213,14 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.shopping_bag,
-            size: 27,
-            color: whiteColor
-        ,
+            size: 20, // İkon boyutunu küçült
+            color: whiteColor,
           ),
           title: Text(
             "My Products",
             style: TextStyle(
-              fontSize: 20,
-              color: whiteColor
-          ,
+              fontSize: 16, // Yazı boyutunu küçült
+              color: whiteColor,
             ),
           ),
         ),
@@ -277,7 +244,7 @@ class _ProfileState extends State<Profile> {
               title: const Text("Are you sure you want to log out?"),
               content: Icon(
                 Icons.warning,
-                size: 40,
+                size: 30, // İkon boyutunu küçült
                 color: redColor,
               ),
               actions: <Widget>[
@@ -314,22 +281,53 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.logout,
-            size: 27,
-            color: whiteColor
-        ,
+            size: 20, // İkon boyutunu küçült
+            color: whiteColor,
           ),
           title: Text(
             "Log out",
             style: TextStyle(
-              fontSize: 20,
-              color: whiteColor
-          ,
+              fontSize: 16, // Yazı boyutunu küçült
+              color: whiteColor,
             ),
           ),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
             redColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding myBenefitHistoryButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+      child: ElevatedButton(
+        onPressed: () {
+          navigatorPush(
+            context,
+            BenefitHistoryPage(),
+          );
+        },
+        child: ListTile(
+          leading: Icon(
+            Icons.history,
+            size: 20, // İkon boyutunu küçült
+            color: whiteColor,
+          ),
+          title: Text(
+            "My Benefit History",
+            style: TextStyle(
+              fontSize: 16, // Yazı boyutunu küçült
+              color: whiteColor,
+            ),
+          ),
+        ),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+            darkerOrangeColor,
           ),
         ),
       ),
@@ -353,9 +351,8 @@ class _ProfileState extends State<Profile> {
         ),
         child: Icon(
           Icons.account_circle_rounded,
-          size: 110,
-          color: whiteColor
-      ,
+          size: 70, // İkon boyutunu küçült
+          color: whiteColor,
         ),
       ),
     );
@@ -369,20 +366,20 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  AppBar mainAppBarExt() {
-    return AppBar(
-      title: Text(
-        "Profile",
-        style: TextStyle(
-          fontSize: 24,
-          fontFamily: 'Roboto',
-        ),
-      ),
-      centerTitle: true,
-      backgroundColor: darkerOrangeColor,
-      elevation: 0,
-      automaticallyImplyLeading: false,
-      leading: CustomBackButton(),
-    );
-  }
+  // AppBar mainAppBarExt() {
+  //   return AppBar(
+  //     title: Text(
+  //       "Profile",
+  //       style: TextStyle(
+  //         fontSize: 20, // Yazı boyutunu küçült
+  //         fontFamily: 'Roboto',
+  //       ),
+  //     ),
+  //     centerTitle: true,
+  //     backgroundColor: darkerOrangeColor,
+  //     elevation: 0,
+  //     automaticallyImplyLeading: false,
+  //     leading: CustomBackButton(),
+  //   );
+  // }
 }

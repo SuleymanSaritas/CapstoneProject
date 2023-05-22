@@ -51,12 +51,12 @@ class _EditProductPageState extends State<EditProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Ürün Düzenle'),
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange[300],
-        elevation: 0, // Matlık için gerekli
-      ),
+      // appBar: AppBar(
+      //   title: Text('Ürün Düzenle'),
+      //   centerTitle: true,
+      //   backgroundColor: Colors.deepOrange[300],
+      //   elevation: 0, // Matlık için gerekli
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

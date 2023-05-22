@@ -119,12 +119,12 @@ class _ProductListPageState extends State<ProductListPage> {
         FirebaseFirestore.instance.collection('products');
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Ürünlerim'),
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange[300],
-        elevation: 0, // Matlık için gerekli
-      ),
+      // appBar: AppBar(
+      //   title: Text('Ürünlerim'),
+      //   centerTitle: true,
+      //   backgroundColor: Colors.deepOrange[300],
+      //   elevation: 0, // Matlık için gerekli
+      // ),
       body: StreamBuilder<QuerySnapshot>(
         stream: products
             .where('userNameSurname', isEqualTo: _nameSurname)

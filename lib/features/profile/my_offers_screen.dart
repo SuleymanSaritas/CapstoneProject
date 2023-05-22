@@ -13,12 +13,12 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('My Offers'),
-          centerTitle: true,
-          backgroundColor: Colors.deepOrange[300],
-          elevation: 0, // Matlık için gerekli
-        ),
+        // appBar: AppBar(
+        //   title: Text('My Offers'),
+        //   centerTitle: true,
+        //   backgroundColor: Colors.deepOrange[300],
+        //   elevation: 0, // Matlık için gerekli
+        // ),
         body: Center(
           child: Text('You need to sign in to view your offers.'),
         ),

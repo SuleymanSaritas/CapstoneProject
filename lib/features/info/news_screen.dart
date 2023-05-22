@@ -12,9 +12,9 @@ class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('News'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('News'),
+      // ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore.collection('news ').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

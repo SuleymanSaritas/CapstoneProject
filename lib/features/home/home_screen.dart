@@ -8,12 +8,6 @@ class NavigationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Hoş Geldiniz'),
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange[300],
-        elevation: 0, // Matlık için gerekli
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

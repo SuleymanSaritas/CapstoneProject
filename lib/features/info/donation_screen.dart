@@ -37,11 +37,6 @@ class _DonationPageState extends State<DonationPage> {
       String veggie, double weight, double benefit) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final userData = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
-      Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
       final donationData = {
         'veggie': veggie,
         'weight': weight,

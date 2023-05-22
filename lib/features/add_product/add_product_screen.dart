@@ -38,12 +38,12 @@ class _AddProductPageState extends State<AddProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Ürün Ekleme Sayfası'),
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange[300],
-        elevation: 0, // Matlık için gerekli
-      ),
+      // appBar: AppBar(
+      //   title: Text('Ürün Ekleme Sayfası'),
+      //   centerTitle: true,
+      //   backgroundColor: Colors.deepOrange[300],
+      //   elevation: 0, // Matlık için gerekli
+      // ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
         child: Form(

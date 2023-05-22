@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lego_market_app/features/info/donation_screen.dart';
 import 'package:lego_market_app/features/info/recycle_solution_screen.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../authenticate/auth_page/auth_type_selector.dart';
 import '../add_product/add_product_screen.dart';
 import 'compost_solution_screen.dart';
 import 'cook_recipes_screen.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class VeggieListPage extends StatefulWidget {
   @override
@@ -13,6 +16,18 @@ class VeggieListPage extends StatefulWidget {
 }
 
 class _VeggieListPageState extends State<VeggieListPage> {
+  late Stream<DocumentSnapshot> _usersStream;
+  @override
+  void initState() {
+    super.initState();
+    if (_auth.currentUser != null) {
+      _usersStream = FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.currentUser!.uid.toString())
+          .snapshots();
+    }
+  }
+
   final _veggiesCollection =
       FirebaseFirestore.instance.collection('veggie_waste_solutions');
   String? _chosenVeggie;
@@ -20,6 +35,9 @@ class _VeggieListPageState extends State<VeggieListPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_auth.currentUser == null) {
+      return AuthTypeSelector();
+    }
     Map<String, Widget Function()> _solutionRoutes = {
       'Cook': () => CookRecipesPage(product: _chosenVeggie),
       'Donate': () => DonationPage(),
@@ -30,12 +48,12 @@ class _VeggieListPageState extends State<VeggieListPage> {
       // Diğer çözümler ve sayfaları buraya ekleyin
     };
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Take Advantage'),
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange[300],
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   title: Text('Take Advantage'),
+      //   centerTitle: true,
+      //   backgroundColor: Colors.deepOrange[300],
+      //   elevation: 0,
+      // ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _veggiesCollection.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
