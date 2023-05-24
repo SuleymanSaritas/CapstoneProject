@@ -36,7 +36,7 @@ class _ProductListPageState extends State<ProductListPage> {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
     return ListTile(
       title: Text(data['name']),
-      subtitle: Text('${data['category']} - ${data['price']} TL'),
+      subtitle: Text('${data['quantity']} - ${data['price']} TL'),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -49,7 +49,7 @@ class _ProductListPageState extends State<ProductListPage> {
                   builder: (context) => EditProductPage(
                     productId: document.id,
                     productName: data['name'],
-                    category: data['category'],
+                    productQuantity: data['quantity'],
                     price: data['price'],
                   ),
                 ),
@@ -96,6 +96,9 @@ class _ProductListPageState extends State<ProductListPage> {
                 MaterialPageRoute(
                   builder: (context) => ProductDetailPage(
                     productId: document.id,
+                    price: data['price'],
+                    productName: data['name'],
+                    productQuantity: data['quantity'],
                   ),
                 ),
               );
@@ -110,7 +113,7 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget build(BuildContext context) {
     if (_nameSurname == null) {
       return Scaffold(
-        appBar: AppBar(title: Text('Ürünlerim')),
+        appBar: AppBar(title: Text('My Products')),
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -119,12 +122,12 @@ class _ProductListPageState extends State<ProductListPage> {
         FirebaseFirestore.instance.collection('products');
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Ürünlerim'),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.deepOrange[300],
-      //   elevation: 0, // Matlık için gerekli
-      // ),
+      appBar: AppBar(
+        title: Text('My Products'),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
+        elevation: 0,
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: products
             .where('userNameSurname', isEqualTo: _nameSurname)

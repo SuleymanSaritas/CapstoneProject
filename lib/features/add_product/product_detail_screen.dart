@@ -2,9 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailPage extends StatelessWidget {
-  final String productId;
+  final String? productId;
+  final String? productName;
+  final int? productQuantity;
+  final int? price;
 
-  ProductDetailPage({required this.productId});
+  ProductDetailPage({
+    required this.productId,
+    required this.productName,
+    required this.productQuantity,
+    required this.price,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +20,13 @@ class ProductDetailPage extends StatelessWidget {
         FirebaseFirestore.instance.collection('products');
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Ürün Detayı'),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.deepOrange[300],
-      //   elevation: 0, // Matlık için gerekli
-      // ),
+      backgroundColor: Color(0xFFF0EAD6),
+      appBar: AppBar(
+        title: Text('Product Details'),
+        centerTitle: true,
+        backgroundColor: Color(0xFF8A2BE2),
+        elevation: 0,
+      ),
       body: FutureBuilder<DocumentSnapshot>(
         future: products.doc(productId).get(),
         builder:
@@ -45,21 +54,21 @@ class ProductDetailPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  data['name'],
+                  productName!,
                   style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  'Kategori: ${data['category']}',
+                  'Miktar: $productQuantity',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  'Fiyat: ${data['price']} TL',
+                  'Fiyat: $price TL',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
@@ -99,8 +108,8 @@ class ProductDetailPage extends StatelessWidget {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Açıklama: ${offer['description']}'),
-                              Text('Teklif veren: ${offer['user_email']}'),
+                              Text('Quantity: ${offer['quantity']} kg'),
+                              Text('Bidder: ${offer['user_email']}'),
                             ],
                           ),
                         );

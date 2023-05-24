@@ -7,6 +7,7 @@ import '../../authenticate/auth_page/auth_type_selector.dart';
 import '../add_product/add_product_screen.dart';
 import 'compost_solution_screen.dart';
 import 'cook_recipes_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -30,11 +31,13 @@ class _VeggieListPageState extends State<VeggieListPage> {
 
   final _veggiesCollection =
       FirebaseFirestore.instance.collection('veggie_waste_solutions');
-  String? _chosenVeggie;
-  int? _condition, _color, _smell, _texture;
+  String? _chosenVeggie, _seasonality;
+  int? _color, _smell, _texture;
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     if (_auth.currentUser == null) {
       return AuthTypeSelector();
     }
@@ -48,12 +51,13 @@ class _VeggieListPageState extends State<VeggieListPage> {
       // Diğer çözümler ve sayfaları buraya ekleyin
     };
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Take Advantage'),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.deepOrange[300],
-      //   elevation: 0,
-      // ),
+      backgroundColor: Color(0xFFF0EAD6),
+      appBar: AppBar(
+        title: Text('Best Solution For Your Product'),
+        centerTitle: true,
+        backgroundColor: Color(0xFF8A2BE2),
+        elevation: 0,
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _veggiesCollection.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -76,154 +80,311 @@ class _VeggieListPageState extends State<VeggieListPage> {
             9,
             (index) => DropdownMenuItem<int>(
               value: index + 1,
-              child: Text((index + 1).toString()),
+              child: Container(
+                margin:
+                    EdgeInsets.only(left: screenWidth * 0.01), // left margin
+                child: Text(
+                  (index + 1).toString(),
+                  style: TextStyle(
+                    color: Colors.black, // Text color is white
+                    fontWeight: FontWeight.bold, // Text is bold
+                  ),
+                ),
+              ),
             ),
           );
 
           return ListView(
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Choose a Vegetable",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  DropdownButton<String>(
-                    value: _chosenVeggie,
-                    items: veggieList.map<DropdownMenuItem<String>>(
-                      (String value) {
-                        var document = snapshot.data!.docs
-                            .firstWhere((doc) => doc['name'] == value);
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Row(
-                            children: [
-                              Image.network(
-                                document['imageURL'],
-                                width: 24,
-                                height: 24,
-                                fit: BoxFit.cover,
+              Container(
+                  margin:
+                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                              margin:
+                                  EdgeInsets.only(bottom: screenHeight * 0.01),
+                              child: Text(
+                                "Choose a Product",
+                                style: GoogleFonts.lato(
+                                    textStyle: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                              ))),
+                      Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Color(0xFF77dd77),
+                              border: Border.all(color: Colors.grey),
+                              boxShadow: [BoxShadow(blurRadius: 2)],
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: DropdownButton<String>(
+                              value: _chosenVeggie,
+                              items: veggieList.map<DropdownMenuItem<String>>(
+                                (String value) {
+                                  var document = snapshot.data!.docs.firstWhere(
+                                      (doc) => doc['name'] == value);
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.only(
+                                                left: screenWidth * 0.01),
+                                            child: Image.network(
+                                              document['imageURL'],
+                                              width: 24,
+                                              height: 24,
+                                              fit: BoxFit.cover,
+                                            )),
+                                        SizedBox(width: 8),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: screenWidth *
+                                                  0.01), // Sol taraf boşluğu (1% ekran genişliği)
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight
+                                                    .bold), // Metin kalın ve beyaz
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ).toList(),
+                              hint: Container(
+                                margin: EdgeInsets.only(
+                                    left: screenWidth *
+                                        0.02), // Sol taraf boşluğu (2% ekran genişliği)
+                                child: Text("Choose a Product"),
                               ),
-                              SizedBox(width: 8),
-                              Text(value),
-                            ],
+                              onChanged: (String? value) {
+                                if (value != null) {
+                                  setState(() {
+                                    _chosenVeggie = value;
+                                  });
+                                }
+                              },
+                            ),
+                          ))
+                    ],
+                  )),
+              Container(
+                margin: EdgeInsets.all(
+                    MediaQuery.of(context).size.width * 0.05), // margin eklendi
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: screenHeight * 0.01),
+                        child: Text(
+                          "Color Score",
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        );
-                      },
-                    ).toList(),
-                    hint: Text("Choose a Vegetable"),
-                    onChanged: (String? value) {
-                      if (value != null) {
-                        setState(() {
-                          _chosenVeggie = value;
-                        });
-                      }
-                    },
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Condition Score",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                  DropdownButton<int>(
-                    value: _condition,
-                    items: scoreItems,
-                    hint: Text("Condition Score"),
-                    onChanged: (int? value) {
-                      setState(() {
-                        _condition = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Color Score",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Color(0xFF77dd77),
+                          border: Border.all(color: Colors.grey),
+                          boxShadow: [BoxShadow(blurRadius: 2)],
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: DropdownButton<int>(
+                          value: _color,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          items: scoreItems,
+                          hint: Container(
+                            margin: EdgeInsets.only(
+                                left: screenWidth * 0.02), // left margin
+                            child: Text("Select Color Score"),
+                          ),
+                          onChanged: (int? value) {
+                            setState(() {
+                              _color = value;
+                            });
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                  DropdownButton<int>(
-                    value: _color,
-                    items: scoreItems,
-                    hint: Text("Color Score"),
-                    onChanged: (int? value) {
-                      setState(() {
-                        _color = value;
-                      });
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Smell Score",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+              Container(
+                margin: EdgeInsets.all(
+                    MediaQuery.of(context).size.width * 0.05), // margin eklendi
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: screenHeight * 0.01),
+                        child: Text(
+                          "Smell Score",
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  DropdownButton<int>(
-                    value: _smell,
-                    items: scoreItems,
-                    hint: Text("Smell Score"),
-                    onChanged: (int? value) {
-                      setState(() {
-                        _smell = value;
-                      });
-                    },
-                  ),
-                ],
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Color(0xFF77dd77),
+                          border: Border.all(color: Colors.grey),
+                          boxShadow: [BoxShadow(blurRadius: 2)],
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: DropdownButton<int>(
+                          value: _smell,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          items: scoreItems,
+                          hint: Container(
+                            margin: EdgeInsets.only(
+                                left: screenWidth * 0.02), // left margin
+                            child: Text("Select Smell Score"),
+                          ),
+                          onChanged: (int? value) {
+                            setState(() {
+                              _smell = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Texture Score",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+              Container(
+                margin: EdgeInsets.all(
+                    MediaQuery.of(context).size.width * 0.05), // margin eklendi
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: screenHeight * 0.01),
+                        child: Text(
+                          "Texture Score",
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  DropdownButton<int>(
-                    value: _texture,
-                    items: scoreItems,
-                    hint: Text("Select Texture Score"),
-                    onChanged: (int? value) {
-                      setState(() {
-                        _texture = value;
-                      });
-                    },
-                  ),
-                ],
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Color(0xFF77dd77),
+                          border: Border.all(color: Colors.grey),
+                          boxShadow: [BoxShadow(blurRadius: 2)],
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: DropdownButton<int>(
+                          value: _texture,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          items: scoreItems,
+                          hint: Container(
+                            margin: EdgeInsets.only(
+                                left: screenWidth * 0.02), // left margin
+                            child: Text("Select Texture Score"),
+                          ),
+                          onChanged: (int? value) {
+                            setState(() {
+                              _texture = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               ElevatedButton(
                 onPressed: () {
-                  int totalScore = _condition! + _color! + _smell! + _texture!;
+                  int totalScore = _color! + _smell! + _texture!;
+                  if (_seasonality == "Yes") {
+                    totalScore += 10;
+                  } else if (_seasonality == "No") {
+                    totalScore += 5;
+                  }
                   DocumentSnapshot chosenVeggie = snapshot.data!.docs
                       .firstWhere(
                           (document) => document['name'] == _chosenVeggie);
-                  List<String> solutions =
-                      totalScore > chosenVeggie['threshold']
-                          ? List<String>.from(chosenVeggie['best_option'])
-                          : List<String>.from(chosenVeggie['worst_option']);
+
+                  List<int> thresholds =
+                      List<int>.from(chosenVeggie['thresholds']);
+                  List<String> solutions;
+                  String condition = "";
+
+                  if (totalScore > thresholds[2]) {
+                    solutions =
+                        List<String>.from(chosenVeggie['good_solution']);
+                    condition = "good";
+                  } else if (totalScore > thresholds[1]) {
+                    solutions =
+                        List<String>.from(chosenVeggie['semi_good_solution']);
+                    condition = "semi good";
+                  } else if (totalScore > thresholds[0]) {
+                    solutions = List<String>.from(chosenVeggie['bad_solution']);
+                    condition = "bad";
+                  } else {
+                    solutions =
+                        List<String>.from(chosenVeggie['rotten_solution']);
+                    condition = "rotten";
+                  }
                   if (_solutionRoutes.containsKey('Recycle')) {
                     if (_chosenVeggie != null) {
                       _solutionRoutes['Recycle'] =
@@ -239,25 +400,29 @@ class _VeggieListPageState extends State<VeggieListPage> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
+                        backgroundColor: Color(0xFF77dd77),
                         title: Text('Solutions for $_chosenVeggie'),
                         content: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: solutions
-                              .map((solution) => ElevatedButton(
-                                    onPressed: () {
-                                      if (_solutionRoutes
-                                          .containsKey(solution)) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  _solutionRoutes[solution]!()),
-                                        );
-                                      }
-                                    },
-                                    child: Text(solution),
-                                  ))
-                              .toList(),
+                          children: [
+                            Text("Your product is $condition . "),
+                            ...solutions.map((solution) => ElevatedButton(
+                                  onPressed: () {
+                                    if (_solutionRoutes.containsKey(solution)) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                _solutionRoutes[solution]!()),
+                                      );
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFF8A2BE2),
+                                  ),
+                                  child: Text(solution),
+                                ))
+                          ],
                         ),
                         actions: <Widget>[
                           TextButton(
@@ -269,6 +434,15 @@ class _VeggieListPageState extends State<VeggieListPage> {
                     },
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Color(0xFF8A2BE2), // Set button color to green
+                  elevation: 5, // Add shadow
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(10), // Add rounded corners
+                  ),
+                ),
                 child: Text('Get Solution'),
               ),
             ],

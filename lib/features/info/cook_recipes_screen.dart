@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CookRecipesPage extends StatelessWidget {
   final String? product;
@@ -7,6 +9,93 @@ class CookRecipesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _showBenefitDialog(double weight, int value) async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Congratulations!'),
+            content: Text(
+                'Your benefit to nature is ${weight * value}. Keep up the good work!'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _addBenefitToCurrentUser(
+        String veggie, double weight, double benefit) async {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final donationData = {
+          'veggie': veggie,
+          'weight': weight,
+          'benefit': benefit,
+          'date': DateTime.now(),
+        };
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update({
+          'your_benefit': FieldValue.arrayUnion([donationData])
+        });
+      }
+    }
+
+    Future<double?> _inputWeight(BuildContext context) async {
+      double? weight;
+      return showDialog<double>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Enter Weight'),
+            content: TextField(
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                weight = double.tryParse(value);
+              },
+              decoration:
+                  InputDecoration(hintText: "Enter weight in kilograms"),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(weight);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _handleWeightSubmission(
+        BuildContext context, double weight) async {
+      // Fetch the data from Firestore
+      final snapshot = await FirebaseFirestore.instance
+          .collection('veggie_waste_solutions')
+          .get();
+
+      // Get the document for the chosen veggie
+      var chosenDoc = snapshot.docs.firstWhere((doc) => doc['name'] == product);
+
+      // Get the value from the document
+      int veggieValue =
+          chosenDoc['value']; // Assuming value is stored in Firebase
+
+      await _showBenefitDialog(weight, veggieValue);
+      await _addBenefitToCurrentUser(product!, weight, weight * veggieValue);
+    }
+
     // Recipes for each product, each recipe being a map with title, ingredients, steps and image url
     Map<String, List<Map<String, dynamic>>> cookRecipes = {
       'onion': [
@@ -62,8 +151,110 @@ class CookRecipesPage extends StatelessWidget {
           'imageUrl':
               'https://img.taste.com.au/Xm8JrIu-/w643-h428-cfill-q90/taste/2016/11/caramelised-onion-and-blue-cheese-tarts-21163-1.jpeg',
         },
-        // More recipes for chicken...
       ],
+      'apple': [
+        {
+          'title': 'Classic Apple Pie',
+          'ingredients': [
+            'Ingredients',
+            '* 2 ½ cups all-purpose flour',
+            '* 1 cup unsalted butter, cold and cubed',
+            '* 1 teaspoon salt',
+            '* 1 tablespoon granulated sugar',
+            '* 6-7 tablespoons ice water',
+            '* 6-7 cups apples, peeled, cored, and sliced',
+            '* 1 cup granulated sugar',
+            '* ¼ cup all-purpose flour',
+            '* 1 teaspoon ground cinnamon',
+            '* ¼ teaspoon ground nutmeg',
+            '* 2 tablespoons butter, cold and cubed',
+            '* 1 egg, beaten (for egg wash)',
+            '* 1 tablespoon granulated sugar (for sprinkling)',
+          ],
+          'steps': [
+            'Instructions:',
+            'In a large mixing bowl, combine the flour, salt, and sugar. Add the cold cubed butter and mix with a pastry cutter or your hands until the mixture resembles coarse crumbs.',
+            'Gradually add ice water, one tablespoon at a time, and mix until the dough comes together. Divide the dough in half, shape into disks, wrap in plastic wrap, and refrigerate for at least 1 hour.',
+            'Preheat the oven to 425°F (220°C).',
+            'In a separate bowl, combine the sliced apples, sugar, flour, cinnamon, and nutmeg. Toss until the apples are well coated.',
+            'Roll out one of the dough disks on a lightly floured surface and transfer it to a pie dish. Pour the apple mixture into the pie crust and dot with the cold cubed butter.',
+            'Roll out the second dough disk and place it over the apples. Trim the excess dough and crimp the edges to seal. Cut a few slits on the top crust to allow steam to escape.',
+            'Brush the top crust with the beaten egg and sprinkle with sugar.',
+            'Place the pie on a baking sheet to catch any drips and bake for 45-50 minutes, or until the crust is golden brown and the apples are tender.',
+            'Allow the pie to cool before serving.',
+          ],
+          'imageUrl':
+              'https://img.taste.com.au/K3ExWmsZ/w720-h480-cfill-q80/taste/2016/11/classic-apple-pie-84181-1.jpeg',
+        },
+        {
+          'title': 'Baked Cinnamon Apples',
+          'ingredients': [
+            'Ingredients',
+            '* 4 large apples, cored and halved',
+            '* 2 tablespoons butter, melted',
+            '* 2 tablespoons brown sugar',
+            '* 1 teaspoon ground cinnamon',
+            '* 1/4 teaspoon ground nutmeg',
+            '* 1/4 cup raisins or chopped nuts (optional)',
+            '* Vanilla ice cream or whipped cream for serving',
+          ],
+          'steps': [
+            'Instructions:',
+            'Preheat the oven to 375°F (190°C).',
+            ' In a small bowl, combine the melted butter, brown sugar, cinnamon, and nutmeg.',
+            ' Place the apple halves in a baking dish. Spoon the butter mixture over each apple half, making sure to coat them evenly.',
+            ' If desired, sprinkle raisins or chopped nuts over the apples.',
+            ' Bake in the preheated oven for about 25-30 minutes, or until the apples are tender and slightly',
+          ],
+          'imageUrl':
+              'https://www.allrecipes.com/thmb/xqx44oIci-lZtUVo3sQ5kRrNNEc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/228683-delicious-cinnamon-baked-apples-ddmfs-Step3-1422-32a76471778b47e9a3018cd0fb75ad53.jpg',
+        },
+      ],
+      'bread': [
+        {
+          'title': 'Croutons',
+          'ingredients': [
+            'Ingredients',
+            '* Medium-quality bread, sliced or cubed',
+            '* Olive oil',
+            '* Salt and pepper',
+            '* Optional seasonings: garlic powder, dried herbs (such as thyme or rosemary), grated Parmesan cheese',
+          ],
+          'steps': [
+            'Instructions:',
+            'Preheat the oven to 350°F (175°C).',
+            'Cut the bread into small cubes or slice it into bite-sized pieces.',
+            'Toss the bread with olive oil, salt, pepper, and any desired seasonings in a bowl until evenly coated.',
+            'Spread the bread cubes in a single layer on a baking sheet.',
+            'Bake for about 10-15 minutes or until the croutons are golden brown and crispy.',
+            'Allow them to cool and use them to top salads, soups, or as a crunchy addition to your favorite dishes',
+          ],
+          'imageUrl':
+              'https://www.thespruceeats.com/thmb/Cm8H9g2b1S4-X2RyUQTzf7VwX-M=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/135575225-589cb6cc5f9b58819c146104.jpg',
+        },
+        {
+          'title': 'Bread Crumbs',
+          'ingredients': [
+            'Ingredients',
+            '* Medium-quality bread, sliced',
+            '* Olive oil or melted butter',
+          ],
+          'steps': [
+            'Instructions:',
+            'Preheat the oven to 300°F (150°C).',
+            'Tear the bread into smaller pieces and place them in a food processor or blender.',
+            'Pulse until the bread turns into coarse crumbs.',
+            'Spread the breadcrumbs in a single layer on a baking sheet.',
+            'Drizzle olive oil or melted butter over the breadcrumbs and toss to coat evenly.',
+            'Bake for about 15-20 minutes, stirring occasionally, until the breadcrumbs are dry and crispy.',
+            'Allow them to cool and store in an airtight container.',
+            'Use the breadcrumbs as a coating for chicken or fish, sprinkle on top of casseroles, or use them in meatball or meatloaf recipes.',
+          ],
+          'imageUrl':
+              'https://www.wikihow.com/images/thumb/f/fe/Make-Bread-Crumbs-with-Stale-Bread-Step-2-Version-3.jpg/550px-nowatermark-Make-Bread-Crumbs-with-Stale-Bread-Step-2-Version-3.jpg',
+        },
+      ],
+
       // More products here...
     };
 
@@ -72,6 +263,8 @@ class CookRecipesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Color(0xFF8A2BE2),
         title: Text('Cook Recipes for $product'),
       ),
       body: Padding(
@@ -126,6 +319,16 @@ class CookRecipesPage extends StatelessWidget {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          double? weight = await _inputWeight(context);
+          if (weight != null) {
+            await _handleWeightSubmission(context, weight);
+          }
+        },
+        child: Icon(Icons.add),
+        tooltip: 'Add Weight',
       ),
     );
   }

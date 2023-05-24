@@ -17,7 +17,7 @@ class OfferScreen extends StatefulWidget {
 class _OfferScreenState extends State<OfferScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _offerPrice;
-  String? _offerDescription;
+  String? _offerQuantity;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _OfferScreenState extends State<OfferScreen> {
         title: Text('Teklif Verme Sayfası'),
         centerTitle: true,
         backgroundColor: Colors.deepOrange[300],
-        elevation: 0, // Matlık için gerekli
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
@@ -34,36 +34,45 @@ class _OfferScreenState extends State<OfferScreen> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Teklif Fiyatı',
-                  border: OutlineInputBorder(),
+              Container(
+                margin: EdgeInsets.only(bottom: 16),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Teklif Fiyatı',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Lütfen teklif fiyatını girin';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => _offerPrice = value,
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Lütfen teklif fiyatını girin';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _offerPrice = value,
               ),
-              SizedBox(height: 16),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Teklif Açıklaması',
-                  border: OutlineInputBorder(),
+              Container(
+                margin: EdgeInsets.only(bottom: 16),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Miktar',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Lütfen bir miktar girin';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => _offerQuantity = value,
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Lütfen teklif açıklaması girin';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _offerDescription = value,
               ),
               SizedBox(height: 32),
               ElevatedButton(
@@ -87,8 +96,8 @@ class _OfferScreenState extends State<OfferScreen> {
       await offers.add({
         'product_id': widget.productId,
         'price': int.parse(_offerPrice as String),
-        'description': _offerDescription,
-        'user_email': widget.userEmail, // Kullanıcının e-posta adresini ekleyin
+        'quantity': int.parse(_offerQuantity as String),
+        'user_email': widget.userEmail,
       });
 
       ScaffoldMessenger.of(context).showSnackBar(

@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 class EditProductPage extends StatefulWidget {
   final String? productId;
   final String? productName;
-  final String? category;
+  final int? productQuantity;
   final int? price;
 
-  EditProductPage(
-      {this.productId, this.productName, this.category, this.price});
+  EditProductPage({
+    this.productId,
+    this.productName,
+    this.productQuantity,
+    this.price,
+  });
 
   @override
   _EditProductPageState createState() => _EditProductPageState();
@@ -17,14 +21,14 @@ class EditProductPage extends StatefulWidget {
 class _EditProductPageState extends State<EditProductPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _productName;
-  String? _category;
+  int? _productQuantity;
   String? _price;
 
   @override
   void initState() {
     super.initState();
     _productName = widget.productName;
-    _category = widget.category;
+    _productQuantity = widget.productQuantity;
     _price = widget.price.toString();
   }
 
@@ -36,8 +40,8 @@ class _EditProductPageState extends State<EditProductPage> {
       CollectionReference products =
           FirebaseFirestore.instance.collection('products');
       await products.doc(widget.productId).update({
-        'name': _productName,
-        'category': _category,
+        'productName': _productName,
+        'productQuantity': _productQuantity,
         'price': int.parse(_price as String),
       });
 
@@ -51,12 +55,6 @@ class _EditProductPageState extends State<EditProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Ürün Düzenle'),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.deepOrange[300],
-      //   elevation: 0, // Matlık için gerekli
-      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -64,45 +62,81 @@ class _EditProductPageState extends State<EditProductPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TextFormField(
-                  initialValue: _productName,
-                  decoration: InputDecoration(labelText: 'Ürün Adı'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Lütfen bir ürün adı girin';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _productName = value;
-                  },
+                Text(
+                  'Ürün Adı',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                TextFormField(
-                  initialValue: _category,
-                  decoration: InputDecoration(labelText: 'Kategori'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Lütfen bir kategori girin';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _category = value;
-                  },
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextFormField(
+                    initialValue: _productName,
+                    decoration: InputDecoration(
+                      labelText: 'Ürün Adı',
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Lütfen bir ürün adı girin';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _productName = value;
+                    },
+                  ),
                 ),
-                TextFormField(
-                  initialValue: _price,
-                  decoration: InputDecoration(labelText: 'Fiyat (TL)'),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Lütfen bir fiyat girin';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _price = value;
-                  },
+                Text(
+                  'Ürün Miktarı',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextFormField(
+                    initialValue: _productQuantity.toString(),
+                    decoration: InputDecoration(
+                      labelText: 'Ürün Miktarı',
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Lütfen bir ürün miktarı girin';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _productQuantity = int.parse(value as String);
+                    },
+                  ),
+                ),
+                Text(
+                  'Fiyat',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextFormField(
+                    initialValue: _price,
+                    decoration: InputDecoration(
+                      labelText: 'Fiyat (TL)',
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Lütfen bir fiyat girin';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _price = value;
+                    },
+                  ),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(

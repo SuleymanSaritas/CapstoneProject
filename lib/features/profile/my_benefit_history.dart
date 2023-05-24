@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class BenefitHistoryPage extends StatefulWidget {
   const BenefitHistoryPage({Key? key}) : super(key: key);
@@ -29,9 +30,9 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Benefit History'),
-      // ),
+      appBar: AppBar(
+        title: Text('Your Benefit History'),
+      ),
       body: FutureBuilder<DocumentSnapshot>(
         future: benefits,
         builder: (context, snapshot) {
@@ -85,18 +86,34 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
                   String veggie = benefit['veggie'];
                   double weight =
                       (benefit['weight'] as num).toDouble(); // Dönüşüm ekledik
-                  DateTime date = (benefit['date'] as Timestamp).toDate();
+                  // DateTime date = (benefit['date'] as Timestamp).toDate();
+                  DateTime timestampDate =
+                      (benefit['date'] as Timestamp).toDate();
+
+                  DateTime date = DateTime(
+                      timestampDate.year,
+                      timestampDate.month,
+                      timestampDate.day,
+                      timestampDate.hour,
+                      timestampDate.minute);
+                  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm");
+                  String dateString = dateFormat.format(date);
+
                   double carbonmultiplier = carbonmultipliers[veggie] ?? 1.0;
                   double watermultiplier = watermultipliers[veggie] ?? 1.0;
                   // Default multiplier is 1 if not found
-                  double carbonSaved = weight * carbonmultiplier;
-                  double waterSaved = weight * watermultiplier;
+                  // double carbonSaved = weight * carbonmultiplier;
+                  double carbonSaved = double.parse(
+                      (weight * carbonmultiplier).toStringAsFixed(2));
+                  double waterSaved = double.parse(
+                      (weight * watermultiplier).toStringAsFixed(2));
+                  // double waterSaved = weight * watermultiplier;
 
                   return DataRow(
                     cells: <DataCell>[
                       DataCell(Text(veggie)),
                       DataCell(Text('$weight kg')),
-                      DataCell(Text(date.toString())),
+                      DataCell(Text(dateString)),
                       DataCell(Text(carbonSaved.toString())),
                       DataCell(Text(waterSaved.toString())),
                     ],
