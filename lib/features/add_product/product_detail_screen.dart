@@ -20,7 +20,6 @@ class ProductDetailPage extends StatelessWidget {
         FirebaseFirestore.instance.collection('products');
 
     return Scaffold(
-      backgroundColor: Color(0xFFF0EAD6),
       appBar: AppBar(
         title: Text('Product Details'),
         centerTitle: true,
@@ -32,7 +31,7 @@ class ProductDetailPage extends StatelessWidget {
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Bir hata oluştu');
+            return Text('Something went wrong');
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -45,7 +44,7 @@ class ProductDetailPage extends StatelessWidget {
               snapshot.data?.data() as Map<String, dynamic>?;
 
           if (data == null) {
-            return Text('Ürün bulunamadı');
+            return Text('Product not found');
           }
 
           return Column(
@@ -61,14 +60,14 @@ class ProductDetailPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  'Miktar: $productQuantity',
+                  'Quantity: $productQuantity',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  'Fiyat: $price TL',
+                  'Price (per kg) : $price TL',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
@@ -81,7 +80,7 @@ class ProductDetailPage extends StatelessWidget {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
-                      return Text('Bir hata oluştu');
+                      return Text('Something went wrong');
                     }
 
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -94,7 +93,8 @@ class ProductDetailPage extends StatelessWidget {
 
                     if (offers.isEmpty) {
                       return Center(
-                        child: Text('Bu ürüne henüz bir teklif yapılmamış.'),
+                        child: Text(
+                            'No offers have been made for this product yet.'),
                       );
                     }
 
@@ -104,12 +104,52 @@ class ProductDetailPage extends StatelessWidget {
                         final offer = offers[index];
 
                         return ListTile(
-                          title: Text('Teklif: ${offer['price']} TL'),
+                          title: Text('Offer: ${offer['price']} TL'),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Quantity: ${offer['quantity']} kg'),
                               Text('Bidder: ${offer['user_email']}'),
+                            ],
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.check_circle,
+                                    color: Colors.green),
+                                onPressed: () async {
+                                  final offerQuantity = offer['quantity'];
+                                  final newProductQuantity =
+                                      productQuantity! - offerQuantity;
+
+                                  if (newProductQuantity <= 0) {
+                                    // If the quantity goes 0 or less, delete the product.
+                                    await products.doc(productId).delete();
+                                  } else {
+                                    // Else update the quantity of the product.
+                                    await products.doc(productId).update({
+                                      'quantity': newProductQuantity,
+                                    });
+                                  }
+
+                                  // Delete the accepted offer.
+                                  await FirebaseFirestore.instance
+                                      .collection('offers')
+                                      .doc(offer.id)
+                                      .delete();
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.cancel, color: Colors.red),
+                                onPressed: () async {
+                                  // Delete the rejected offer.
+                                  await FirebaseFirestore.instance
+                                      .collection('offers')
+                                      .doc(offer.id)
+                                      .delete();
+                                },
+                              ),
                             ],
                           ),
                         );

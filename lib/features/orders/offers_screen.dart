@@ -25,8 +25,7 @@ class _OfferScreenState extends State<OfferScreen> {
       appBar: AppBar(
         title: Text('Teklif Verme Sayfası'),
         centerTitle: true,
-        backgroundColor: Colors.deepOrange[300],
-        elevation: 0,
+        backgroundColor: Colors.deepPurple,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),

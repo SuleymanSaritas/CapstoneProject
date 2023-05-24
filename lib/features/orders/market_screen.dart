@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../orders/offers_screen.dart';
@@ -12,14 +13,13 @@ class MarketPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Market'),
         centerTitle: true,
-        backgroundColor: Colors.deepOrange[300],
-        elevation: 0, // Matlık için gerekli
+        backgroundColor: Colors.deepPurple,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: products.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Bir hata oluştu');
+            return Text('Something went wrong');
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,27 +43,35 @@ class MarketPage extends StatelessWidget {
 
                   if (userSnapshot.data?.docs.isEmpty ?? true) {
                     return ListTile(
-                      title: Text('Kullanıcı verisi bulunamadı'),
+                      title: Text('User data not found'),
                     );
                   }
 
-                  return ListTile(
-                    title: Text(data['name']),
-                    subtitle: Text(
-                        '${data['category']} - ${data['price']} TL - Satıcı: ${data['userNameSurname']}'),
-                    trailing: ElevatedButton.icon(
-                      icon: Icon(Icons.local_offer),
-                      label: Text('Teklif Ver'),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OfferScreen(
-                              productId: data['product_id'],
-                            ),
-                          ),
-                        );
-                      },
+                  final currentUser = FirebaseAuth.instance.currentUser;
+
+                  return Card(
+                    elevation: 5,
+                    child: ListTile(
+                      title: Text(data['name']),
+                      subtitle: Text(
+                          ' ${data['price']} TL - Seller: ${data['userNameSurname']}'),
+                      trailing: ElevatedButton.icon(
+                        icon: Icon(Icons.local_offer),
+                        label: Text('Give Offer'),
+                        onPressed: () {
+                          if (currentUser != null &&
+                              data['userNameSurname'] != currentUser.email) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OfferScreen(
+                                  productId: data['product_id'],
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   );
                 },
@@ -72,74 +80,6 @@ class MarketPage extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class CreateOfferDialog extends StatefulWidget {
-  final String productId;
-  final String sellerId;
-
-  CreateOfferDialog({required this.productId, required this.sellerId});
-
-  @override
-  _CreateOfferDialogState createState() => _CreateOfferDialogState();
-}
-
-class _CreateOfferDialogState extends State<CreateOfferDialog> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _offerDetails = '';
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Teklif Oluştur'),
-      content: Form(
-        key: _formKey,
-        child: TextFormField(
-          decoration: InputDecoration(labelText: 'Teklif Detayları'),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Lütfen teklif detaylarını girin';
-            }
-            return null;
-          },
-          onSaved: (value) {
-            if (value != null) {
-              _offerDetails = value;
-            }
-          },
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('İptal'),
-        ),
-        TextButton(
-          onPressed: () async {
-            if (_formKey.currentState!.validate()) {
-              _formKey.currentState!.save();
-
-              await FirebaseFirestore.instance.collection('offers').add({
-                'productId': widget.productId,
-                'sellerId': widget.sellerId,
-                // Alıcı olarak şu anki kullanıcıyı eklemek için 'userId' kullanın.
-                // Kullanıcı kimliğini nasıl alacağınız projenize bağlıdır.
-                '`FirebaseAuth.instance.currentUser.uid`': 'userId',
-                'details': _offerDetails,
-                'status': 'pending', // Teklifin başlangıç durumu
-                'timestamp': FieldValue.serverTimestamp(),
-              });
-
-              Navigator.pop(context);
-            }
-          },
-          child: Text('Teklif Gönder'),
-        ),
-      ],
     );
   }
 }

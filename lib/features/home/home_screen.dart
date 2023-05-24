@@ -9,7 +9,6 @@ class NavigationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF0EAD6),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -109,7 +108,7 @@ class NavigationPage extends StatelessWidget {
             );
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFaec6cf),
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
             shadowColor: Color.fromARGB(0, 209, 187, 187),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),

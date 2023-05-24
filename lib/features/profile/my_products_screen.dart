@@ -27,7 +27,7 @@ class _ProductListPageState extends State<ProductListPage> {
           .get();
       Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
       setState(() {
-        _nameSurname = data['name surname'];
+        _nameSurname = data['email'];
       });
     }
   }

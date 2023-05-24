@@ -31,7 +31,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
 
   final _veggiesCollection =
       FirebaseFirestore.instance.collection('veggie_waste_solutions');
-  String? _chosenVeggie, _seasonality;
+  String? _chosenVeggie;
   int? _color, _smell, _texture;
 
   @override
@@ -43,7 +43,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
     }
     Map<String, Widget Function()> _solutionRoutes = {
       'Cook': () => CookRecipesPage(product: _chosenVeggie),
-      'Donate': () => DonationPage(),
+      'Donate': () => DonationPage(product: _chosenVeggie),
       'Sell': () => AddProductPage(),
       'Compost': () => CompostSolutionPage(product: _chosenVeggie),
       'Recycle': () => RecycleSolutionPage(product: _chosenVeggie),
@@ -51,7 +51,6 @@ class _VeggieListPageState extends State<VeggieListPage> {
       // Diğer çözümler ve sayfaları buraya ekleyin
     };
     return Scaffold(
-      backgroundColor: Color(0xFFF0EAD6),
       appBar: AppBar(
         title: Text('Best Solution For Your Product'),
         centerTitle: true,
@@ -77,7 +76,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
 
           List<DropdownMenuItem<int>> scoreItems =
               List<DropdownMenuItem<int>>.generate(
-            9,
+            5,
             (index) => DropdownMenuItem<int>(
               value: index + 1,
               child: Container(
@@ -119,7 +118,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                           width: MediaQuery.of(context).size.width,
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              color: Color(0xFF77dd77),
+                              color: Color.fromARGB(255, 255, 255, 255),
                               border: Border.all(color: Colors.grey),
                               boxShadow: [BoxShadow(blurRadius: 2)],
                               borderRadius: BorderRadius.circular(5),
@@ -203,7 +202,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                       width: MediaQuery.of(context).size.width,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: Color(0xFF77dd77),
+                          color: Color.fromARGB(255, 255, 255, 255),
                           border: Border.all(color: Colors.grey),
                           boxShadow: [BoxShadow(blurRadius: 2)],
                           borderRadius: BorderRadius.circular(5),
@@ -261,7 +260,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                       width: MediaQuery.of(context).size.width,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: Color(0xFF77dd77),
+                          color: Color.fromARGB(255, 255, 255, 255),
                           border: Border.all(color: Colors.grey),
                           boxShadow: [BoxShadow(blurRadius: 2)],
                           borderRadius: BorderRadius.circular(5),
@@ -319,7 +318,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                       width: MediaQuery.of(context).size.width,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: Color(0xFF77dd77),
+                          color: Color.fromARGB(255, 255, 255, 255),
                           border: Border.all(color: Colors.grey),
                           boxShadow: [BoxShadow(blurRadius: 2)],
                           borderRadius: BorderRadius.circular(5),
@@ -354,30 +353,25 @@ class _VeggieListPageState extends State<VeggieListPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  int totalScore = _color! + _smell! + _texture!;
-                  if (_seasonality == "Yes") {
-                    totalScore += 10;
-                  } else if (_seasonality == "No") {
-                    totalScore += 5;
-                  }
+                  double totalScore = (_color! * 0.246153846 +
+                      _smell! * 0.676923077 +
+                      _texture! * 0.076923077);
                   DocumentSnapshot chosenVeggie = snapshot.data!.docs
                       .firstWhere(
                           (document) => document['name'] == _chosenVeggie);
 
-                  List<int> thresholds =
-                      List<int>.from(chosenVeggie['thresholds']);
                   List<String> solutions;
                   String condition = "";
 
-                  if (totalScore > thresholds[2]) {
+                  if (totalScore < 2) {
                     solutions =
                         List<String>.from(chosenVeggie['good_solution']);
                     condition = "good";
-                  } else if (totalScore > thresholds[1]) {
+                  } else if (totalScore < 3 && totalScore >= 2) {
                     solutions =
                         List<String>.from(chosenVeggie['semi_good_solution']);
                     condition = "semi good";
-                  } else if (totalScore > thresholds[0]) {
+                  } else if (totalScore >= 3 && totalScore < 4) {
                     solutions = List<String>.from(chosenVeggie['bad_solution']);
                     condition = "bad";
                   } else {
@@ -385,22 +379,23 @@ class _VeggieListPageState extends State<VeggieListPage> {
                         List<String>.from(chosenVeggie['rotten_solution']);
                     condition = "rotten";
                   }
-                  if (_solutionRoutes.containsKey('Recycle')) {
-                    if (_chosenVeggie != null) {
-                      _solutionRoutes['Recycle'] =
-                          () => RecycleSolutionPage(product: _chosenVeggie);
-                      _solutionRoutes['Compost'] =
-                          () => CompostSolutionPage(product: _chosenVeggie);
-                      _solutionRoutes['Cook'] =
-                          () => CookRecipesPage(product: _chosenVeggie);
-                    }
+
+                  if (_chosenVeggie != null) {
+                    _solutionRoutes['Recycle'] =
+                        () => RecycleSolutionPage(product: _chosenVeggie);
+                    _solutionRoutes['Compost'] =
+                        () => CompostSolutionPage(product: _chosenVeggie);
+                    _solutionRoutes['Cook'] =
+                        () => CookRecipesPage(product: _chosenVeggie);
+                    _solutionRoutes['Donate'] =
+                        () => DonationPage(product: _chosenVeggie);
                   }
 
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        backgroundColor: Color(0xFF77dd77),
+                        backgroundColor: Color.fromARGB(255, 255, 255, 255),
                         title: Text('Solutions for $_chosenVeggie'),
                         content: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

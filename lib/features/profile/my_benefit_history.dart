@@ -32,6 +32,8 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Benefit History'),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: benefits,
@@ -48,14 +50,14 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
 
             // Create a map to store multipliers for each veggie
             Map<String, double> carbonmultipliers = {
-              'onion': 0.2,
-              'apple': 0.5,
-              'bread': 1.0,
+              'onion': 0.1,
+              'apple': 0.4,
+              'bread': 1.3,
             };
             Map<String, double> watermultipliers = {
-              'onion': 100,
-              'apple': 500,
-              'bread': 1000,
+              'onion': 316,
+              'apple': 822,
+              'bread': 1608,
             };
 
             // Sort by date
@@ -66,6 +68,9 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columns: const <DataColumn>[
+                  DataColumn(
+                    label: Text('Action'),
+                  ),
                   DataColumn(
                     label: Text('Veggie'),
                   ),
@@ -83,6 +88,7 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
                   ),
                 ],
                 rows: yourBenefits.map<DataRow>((benefit) {
+                  String action = benefit['action'];
                   String veggie = benefit['veggie'];
                   double weight =
                       (benefit['weight'] as num).toDouble(); // Dönüşüm ekledik
@@ -111,6 +117,7 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
 
                   return DataRow(
                     cells: <DataCell>[
+                      DataCell(Text(action)),
                       DataCell(Text(veggie)),
                       DataCell(Text('$weight kg')),
                       DataCell(Text(dateString)),

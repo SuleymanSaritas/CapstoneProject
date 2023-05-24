@@ -29,13 +29,19 @@ class _AddProductPageState extends State<AddProductPage> {
           .doc(user.uid)
           .get();
       Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
-      _name_Surname = data['name surname'];
+      _name_Surname = data['email'];
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Product Details'),
+        centerTitle: true,
+        backgroundColor: Color(0xFF8A2BE2),
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Form(

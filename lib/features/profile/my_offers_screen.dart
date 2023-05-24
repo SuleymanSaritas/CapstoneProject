@@ -29,8 +29,7 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
       appBar: AppBar(
         title: Text('My Offers'),
         centerTitle: true,
-        backgroundColor: Colors.deepOrange[300],
-        elevation: 0, // Matlık için gerekli
+        backgroundColor: Colors.deepPurple,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

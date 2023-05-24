@@ -72,7 +72,11 @@
 //   }
 // }
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../profile/my_benefit_history.dart';
 
 class RecycleSolutionPage extends StatelessWidget {
   final String? product;
@@ -83,6 +87,87 @@ class RecycleSolutionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Product recycling solutions and image url holding a dictionary
+    Future<void> _showBenefitDialog(BuildContext context) async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Congratulations!'),
+            content: Text(
+                'Congratulations, you have contributed to nature with your activity. Click to find out your contribution.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BenefitHistoryPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _addBenefitToCurrentUser(
+        String veggie, double weight, String action) async {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final donationData = {
+          'veggie': veggie,
+          'weight': weight,
+          'action': action,
+          'date': DateTime.now(),
+        };
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update({
+          'your_benefit': FieldValue.arrayUnion([donationData])
+        });
+      }
+    }
+
+    Future<double?> _inputWeight(BuildContext context) async {
+      double? weight;
+      return showDialog<double>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Enter Weight in kilograms'),
+            content: TextField(
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                weight = double.tryParse(value);
+              },
+              decoration:
+                  InputDecoration(hintText: "Enter weight in kilograms"),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(weight);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _handleWeightSubmission(
+        BuildContext context, double weight) async {
+      await _showBenefitDialog(context);
+      await _addBenefitToCurrentUser(product!, weight, 'Recycle');
+    }
+
     Map<String, List<dynamic>> recycleSolutions = {
       'bread': [
         'How to recycle bread:',
@@ -128,6 +213,8 @@ class RecycleSolutionPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Recycle Solution for $product'),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -158,6 +245,16 @@ class RecycleSolutionPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          double? weight = await _inputWeight(context);
+          if (weight != null) {
+            await _handleWeightSubmission(context, weight);
+          }
+        },
+        child: Icon(Icons.add),
+        tooltip: 'Add Weight',
       ),
     );
   }

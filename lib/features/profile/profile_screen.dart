@@ -7,7 +7,6 @@ import 'package:lego_market_app/core/components/navigator/push.dart';
 import '../../authenticate/auth_page/auth_type_selector.dart';
 import '../add_product/add_product_screen.dart';
 import '../home/home_screen.dart';
-import '../orders/custombackbutton.dart';
 import '../profile/my_products_screen.dart';
 import 'my_benefit_history.dart';
 import 'my_offers_screen.dart';
@@ -48,6 +47,11 @@ class _ProfileState extends State<Profile> {
       return AuthTypeSelector();
     }
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(

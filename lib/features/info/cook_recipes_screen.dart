@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../profile/my_benefit_history.dart';
+
 class CookRecipesPage extends StatelessWidget {
   final String? product;
 
@@ -9,19 +11,25 @@ class CookRecipesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _showBenefitDialog(double weight, int value) async {
+    Future<void> _showBenefitDialog(BuildContext context) async {
       return showDialog<void>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Congratulations!'),
             content: Text(
-                'Your benefit to nature is ${weight * value}. Keep up the good work!'),
+                'Congratulations, you have contributed to nature with your activity. Click to find out your contribution.'),
             actions: <Widget>[
               TextButton(
                 child: Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BenefitHistoryPage(),
+                    ),
+                  );
                 },
               ),
             ],
@@ -31,13 +39,13 @@ class CookRecipesPage extends StatelessWidget {
     }
 
     Future<void> _addBenefitToCurrentUser(
-        String veggie, double weight, double benefit) async {
+        String veggie, double weight, String action) async {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         final donationData = {
           'veggie': veggie,
           'weight': weight,
-          'benefit': benefit,
+          'action': action,
           'date': DateTime.now(),
         };
 
@@ -56,7 +64,7 @@ class CookRecipesPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Enter Weight'),
+            title: Text('Enter Weight in kilograms'),
             content: TextField(
               keyboardType: TextInputType.number,
               onChanged: (value) {
@@ -80,20 +88,8 @@ class CookRecipesPage extends StatelessWidget {
 
     Future<void> _handleWeightSubmission(
         BuildContext context, double weight) async {
-      // Fetch the data from Firestore
-      final snapshot = await FirebaseFirestore.instance
-          .collection('veggie_waste_solutions')
-          .get();
-
-      // Get the document for the chosen veggie
-      var chosenDoc = snapshot.docs.firstWhere((doc) => doc['name'] == product);
-
-      // Get the value from the document
-      int veggieValue =
-          chosenDoc['value']; // Assuming value is stored in Firebase
-
-      await _showBenefitDialog(weight, veggieValue);
-      await _addBenefitToCurrentUser(product!, weight, weight * veggieValue);
+      await _showBenefitDialog(context);
+      await _addBenefitToCurrentUser(product!, weight, 'Cook');
     }
 
     // Recipes for each product, each recipe being a map with title, ingredients, steps and image url
