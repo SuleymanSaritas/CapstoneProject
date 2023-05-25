@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:lego_market_app/features/home/home_screen.dart';
 
-import '../../core/widget/gradient_container.dart';
-import '../../core/widget/main_appBar.dart';
-
 class RegisterPage extends StatefulWidget {
   final firestore = FirebaseFirestore.instance;
   @override
@@ -28,16 +25,13 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainAppBar(
-          Text(
-            "Join",
-            style: TextStyle(
-              fontSize: 24,
-            ),
-          ),
-          true),
-      body: buildGradientContainer(
-        Padding(
+      appBar: AppBar(
+        title: Text('Register'),
+        centerTitle: true,
+        backgroundColor: Color(0xFF8A2BE2),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 90, 10, 30),
           child: Form(
             key: formKey,
@@ -49,16 +43,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: nameSurnameController,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      cursorColor: Colors.white,
+                      cursorColor: Colors.black,
                       decoration: const InputDecoration(
                         labelText: "Name/Surname",
                         labelStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         hintStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       validator: (String? nameSurname) {
@@ -71,16 +65,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: phoneController,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      cursorColor: Colors.white,
+                      cursorColor: Colors.black,
                       decoration: const InputDecoration(
                         labelText: "Phone",
                         labelStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         hintStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       validator: (String? phone) {
@@ -93,16 +87,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: addressController,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       cursorColor: Colors.white,
                       decoration: const InputDecoration(
                         labelText: "Address",
                         labelStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         hintStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       validator: (String? address) {
@@ -116,16 +110,16 @@ class _RegisterPageState extends State<RegisterPage> {
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      cursorColor: Colors.white,
+                      cursorColor: Colors.black,
                       decoration: const InputDecoration(
                         labelText: "E-mail",
                         labelStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         hintStyle: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       validator: (String? mail) {
@@ -138,12 +132,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: _passwordController,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      cursorColor: Colors.white,
+                      cursorColor: Colors.black,
                       decoration: const InputDecoration(
                         labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: TextStyle(color: Colors.black),
                       ),
                       validator: (String? password) {
                         if (password!.isEmpty) {
@@ -161,14 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: 200,
                         height: 40,
                         decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xFFE49E07),
-                              Color(0xF541012C),
-                            ],
-                          ),
+                          color: Colors.deepPurple,
                         ),
                         alignment: Alignment.center,
                         child: SignInButtonBuilder(

@@ -39,8 +39,7 @@ class _AddProductPageState extends State<AddProductPage> {
       appBar: AppBar(
         title: Text('Product Details'),
         centerTitle: true,
-        backgroundColor: Color(0xFF8A2BE2),
-        elevation: 0,
+        backgroundColor: Colors.deepPurple,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),

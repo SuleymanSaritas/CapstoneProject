@@ -54,7 +54,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
       appBar: AppBar(
         title: Text('Best Solution For Your Product'),
         centerTitle: true,
-        backgroundColor: Color(0xFF8A2BE2),
+        backgroundColor: Colors.deepPurple,
         elevation: 0,
       ),
       body: StreamBuilder<QuerySnapshot>(

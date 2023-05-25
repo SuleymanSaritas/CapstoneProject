@@ -8,6 +8,20 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late final PageController _controller;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,38 +38,92 @@ class _NewsPageState extends State<NewsPage> {
             return Center(child: CircularProgressIndicator());
           }
 
-          return PageView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (BuildContext context, int index) {
-              DocumentSnapshot news = snapshot.data!.docs[index];
-
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image.network(news['imageUrl']),
-                      SizedBox(height: 8),
-                      Text(
-                        news['title'],
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        news['content'].replaceAll('\\n', '\n'),
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
+          return Column(
+            children: [
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List<Widget>.generate(
+                  snapshot.data!.docs.length,
+                  (index) => Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CircleAvatar(
+                      radius: 5,
+                      backgroundColor: _currentIndex == index
+                          ? Colors.deepPurple
+                          : Colors.grey,
+                    ),
                   ),
                 ),
-              );
-            },
+              ),
+              Expanded(
+                child: PageView.builder(
+                  controller: _controller,
+                  itemCount: snapshot.data!.docs.length,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    DocumentSnapshot news = snapshot.data!.docs[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(news['imageUrl']),
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Container(
+                              margin: EdgeInsets.all(10),
+                              child: Text(
+                                news['title'],
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Lato',
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Container(
+                              margin: EdgeInsets.all(10),
+                              child: Text(
+                                news['content'].replaceAll('\\n', '\n'),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Lato',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),

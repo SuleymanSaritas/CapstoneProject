@@ -260,7 +260,7 @@ class CookRecipesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color(0xFF8A2BE2),
+        backgroundColor: Colors.deepPurple,
         title: Text('Cook Recipes for $product'),
       ),
       body: Padding(

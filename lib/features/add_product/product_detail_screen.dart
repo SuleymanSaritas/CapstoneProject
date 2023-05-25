@@ -23,7 +23,7 @@ class ProductDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Product Details'),
         centerTitle: true,
-        backgroundColor: Color(0xFF8A2BE2),
+        backgroundColor: Colors.deepPurple,
         elevation: 0,
       ),
       body: FutureBuilder<DocumentSnapshot>(

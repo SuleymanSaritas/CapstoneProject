@@ -96,7 +96,7 @@ class DonationPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Donate Solution for $product'),
         centerTitle: true,
-        backgroundColor: Color(0xFF8A2BE2),
+        backgroundColor: Colors.deepPurple,
       ),
       body: SingleChildScrollView(
         child: Padding(

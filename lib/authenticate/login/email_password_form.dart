@@ -19,7 +19,8 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
     return Form(
       key: _formKey,
       child: Card(
-        color: Colors.transparent,
+        elevation: 10, // Gölge eklendi
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 30, 16, 20),
           child: Column(
@@ -31,60 +32,84 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
                   child: Text(
                     "Login with Email and Password",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 21,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   alignment: Alignment.center,
                 ),
               ),
+              SizedBox(height: 16), // TextFormField'lar arasına boşluk eklendi
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: _emailController,
-                style: TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  labelStyle: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  labelStyle: TextStyle(color: Colors.black),
                   labelText: "E-mail",
-                  hintStyle: TextStyle(color: Colors.white),
-                  fillColor: Colors.white,
-                  focusColor: Colors.white,
-                  hoverColor: Colors.white,
+                  hintStyle: TextStyle(color: Colors.black),
+                  fillColor:
+                      Colors.grey[300], // Border ve içerik rengi değiştirildi
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderSide: BorderSide(color: Colors.black),
+                  // ),
+                  // enabledBorder: OutlineInputBorder(
+                  //   borderSide: BorderSide(color: Colors.black),
+                  // ),
                 ),
                 validator: (String? mail) {
                   if (mail!.isEmpty) return "Please write an e-mail";
                   return null;
                 },
               ),
+              SizedBox(height: 16), // TextFormField'lar arasına boşluk eklendi
               TextFormField(
                 controller: _passwordController,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
-                decoration: const InputDecoration(
-                    labelStyle: TextStyle(color: Colors.white),
-                    labelText: "Password",
-                    fillColor: Colors.white,
-                    focusColor: Colors.white,
-                    hoverColor: Colors.white),
+                decoration: InputDecoration(
+                  labelStyle: TextStyle(color: Colors.black),
+                  labelText: "Password",
+                  fillColor:
+                      Colors.grey[300], // Border ve içerik rengi değiştirildi
+                  // focusedBorder: OutlineInputBorder(
+                  //   borderSide: BorderSide(color: Colors.black),
+                  // ),
+                  // enabledBorder: OutlineInputBorder(
+                  //   borderSide: BorderSide(color: Colors.black),
+                  // ),
+                ),
                 validator: (String? password) {
                   if (password!.isEmpty) return "Please type a password";
                   return null;
                 },
                 obscureText: true, //! prevents passwords from appearing.
               ),
+              SizedBox(
+                  height:
+                      24), // TextFormField'lar ile butonlar arasına boşluk eklendi
               Container(
-                padding: const EdgeInsets.fromLTRB(5, 30, 5, 0),
-                alignment: Alignment.center,
-                child: SignInButton(
-                  Buttons.Email,
-                  text: "Login with Email",
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _signInWithEmailAndPassword();
-                    }
-                  },
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  alignment: Alignment.center,
+                  child: TextButton.icon(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _signInWithEmailAndPassword();
+                      }
+                    },
+                    icon: Icon(Icons.email, color: Colors.white),
+                    label: Expanded(
+                      child: Center(
+                        child: Text('Login with Email',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.deepPurple),
+                  )),
+              SizedBox(height: 16), // Butonlar arasına boşluk eklendi
             ],
           ),
         ),

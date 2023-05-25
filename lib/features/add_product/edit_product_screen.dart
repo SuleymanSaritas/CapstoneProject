@@ -58,7 +58,7 @@ class _EditProductPageState extends State<EditProductPage> {
       appBar: AppBar(
         title: Text('Product Details'),
         centerTitle: true,
-        backgroundColor: Color(0xFF8A2BE2),
+        backgroundColor: Colors.deepPurple,
         elevation: 0,
       ),
       body: Padding(

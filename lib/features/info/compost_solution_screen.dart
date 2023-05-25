@@ -155,7 +155,7 @@ class CompostSolutionPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Compost Solution for $product'),
         centerTitle: true,
-        backgroundColor: Color(0xFF8A2BE2),
+        backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
