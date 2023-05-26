@@ -32,7 +32,7 @@ class NavigationPage extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     child: Image.asset(
-                      'assets/images/splash2.png', //Replace with your logo asset path
+                      'assets/images/splash22.png', //Replace with your logo asset path
                       height: 200,
                     ),
                     borderRadius: BorderRadius.circular(15.0),

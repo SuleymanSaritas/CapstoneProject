@@ -46,14 +46,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^2.2.19
+  url_launcher: ^6.0.10
 
 flutter_native_splash: 
-  
-  
   android: true
   web: true 
-  color: "#00FF00" 
-  image: assets/images/splash.png
+  color: "ffffff"
+  image: assets/images/splashh.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -75,6 +74,7 @@ flutter:
     - assets/images/profile_image.png
     - assets/images/info_image.png
     - assets/images/farm_academy_image.png
-    - assets/images/splash.png
-    - assets/images/splash2.png
+    - assets/images/splashh.png
+    - assets/images/splash22.png
     - assets/images/your_image.png
+    - assets/images/leaf.png

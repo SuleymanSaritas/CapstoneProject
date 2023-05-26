@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:lego_market_app/core/components/navigator/push_replacement.dart';
 import 'package:lego_market_app/features/home/home_screen.dart';
 
@@ -91,24 +90,31 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
                   height:
                       24), // TextFormField'lar ile butonlar arasına boşluk eklendi
               Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  alignment: Alignment.center,
-                  child: TextButton.icon(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        _signInWithEmailAndPassword();
-                      }
-                    },
-                    icon: Icon(Icons.email, color: Colors.white),
-                    label: Expanded(
-                      child: Center(
-                        child: Text('Login with Email',
-                            style: TextStyle(color: Colors.white)),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      _signInWithEmailAndPassword();
+                    }
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.email, color: Colors.white),
+                      Flexible(
+                        child: Text(
+                          'Login with Email',
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
-                    style: TextButton.styleFrom(
-                        backgroundColor: Colors.deepPurple),
-                  )),
+                    ],
+                  ),
+                  style:
+                      TextButton.styleFrom(backgroundColor: Colors.deepPurple),
+                ),
+              ),
               SizedBox(height: 16), // Butonlar arasına boşluk eklendi
             ],
           ),

@@ -21,7 +21,25 @@ class CookRecipesPage extends StatelessWidget {
                 'Congratulations, you have contributed to nature with your activity. Click to find out your contribution.'),
             actions: <Widget>[
               TextButton(
-                child: Text('OK'),
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Go to my benefits'),
+                    SizedBox(
+                        width:
+                            10), // Bu kod metinle resim arasında biraz boşluk bırakır.
+                    Image.asset('assets/images/leaf.png',
+                        width: 20,
+                        height:
+                            20), // Yolu ve boyutu kendi logonuza göre ayarlayın
+                  ],
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.push(
