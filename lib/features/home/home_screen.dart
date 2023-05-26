@@ -70,7 +70,7 @@ class NavigationPage extends StatelessWidget {
               Expanded(
                 child: _buildNavigationButton(
                   context,
-                  'Farm Academy',
+                  'Sustainability News',
                   'assets/images/farm_academy_image.png',
                   NewsPage(),
                 ),
