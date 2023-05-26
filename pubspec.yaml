@@ -63,6 +63,7 @@ flutter:
     - family: Lato
       fonts:
         - asset: assets/fonts/Lato-Regular.ttf
+          weight: 700
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -78,3 +79,6 @@ flutter:
     - assets/images/splash22.png
     - assets/images/your_image.png
     - assets/images/leaf.png
+    - assets/images/apple.png
+    - assets/images/bread.png
+    - assets/images/onion.png

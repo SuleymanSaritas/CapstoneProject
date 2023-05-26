@@ -92,29 +92,54 @@ class RecycleSolutionPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Congratulations!'),
+            title: Text(
+              'Congratulations!',
+              style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.bold),
+            ),
             content: Text(
-                'Congratulations, you have contributed to nature with your activity. Click to find out your contribution.'),
+              'Congratulations, you have contributed to nature with your activity. Click to find out your contribution.',
+              style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.bold),
+            ),
             actions: <Widget>[
-              TextButton(
-                child: Text('Cancel'),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                ),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-              TextButton(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text('Go to my benefits'),
-                    SizedBox(
-                        width:
-                            10), // Bu kod metinle resim arasında biraz boşluk bırakır.
-                    Image.asset('assets/images/leaf.png',
-                        width: 20,
-                        height:
-                            20), // Yolu ve boyutu kendi logonuza göre ayarlayın
-                  ],
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Go to my benefits',
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                          width:
+                              10), // Bu kod metinle resim arasında biraz boşluk bırakır.
+                      Image.asset('assets/images/leaf.png',
+                          width: 20,
+                          height:
+                              20), // Yolu ve boyutu kendi logonuza göre ayarlayın
+                    ],
+                  ),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();

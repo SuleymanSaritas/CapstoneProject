@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         hintColor: Colors.white,
         focusColor: Colors.white,
         shadowColor: Colors.transparent,
+        fontFamily: 'Lato',
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,

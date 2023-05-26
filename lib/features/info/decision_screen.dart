@@ -136,8 +136,9 @@ class _VeggieListPageState extends State<VeggieListPage> {
                                         Container(
                                             margin: EdgeInsets.only(
                                                 left: screenWidth * 0.01),
-                                            child: Image.network(
-                                              document['imageURL'],
+                                            child: Image.asset(
+                                              'assets/images/' +
+                                                  document['imageURL'],
                                               width: 24,
                                               height: 24,
                                               fit: BoxFit.cover,
@@ -400,23 +401,51 @@ class _VeggieListPageState extends State<VeggieListPage> {
                         content: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Your product is $condition . "),
-                            ...solutions.map((solution) => ElevatedButton(
-                                  onPressed: () {
-                                    if (_solutionRoutes.containsKey(solution)) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
+                            Padding(
+                              padding: EdgeInsets.all(
+                                  8.0), // Yazı için marj eklenir.
+                              child: Text(
+                                "Your product is $condition . ",
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            ...solutions.map(
+                              (solution) => Padding(
+                                padding: EdgeInsets.all(
+                                    8.0), // Buton için marj eklenir.
+                                child: Center(
+                                  // Bu widget, child widget'ını ortalar.
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (_solutionRoutes
+                                          .containsKey(solution)) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
                                             builder: (context) =>
-                                                _solutionRoutes[solution]!()),
-                                      );
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF8A2BE2),
+                                                _solutionRoutes[solution]!(),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xFF8A2BE2),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'You can $solution with your product',
+                                          style: TextStyle(fontFamily: 'Lato'),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  child: Text(solution),
-                                ))
+                                ),
+                              ),
+                            )
                           ],
                         ),
                         actions: <Widget>[
