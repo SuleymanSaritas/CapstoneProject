@@ -56,6 +56,10 @@ class MarketPage extends StatelessWidget {
                       subtitle: Text(
                           ' ${data['price']} TL - Seller: ${data['userNameSurname']}'),
                       trailing: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurple,
+                          textStyle: TextStyle(color: Colors.white),
+                        ),
                         icon: Icon(Icons.local_offer),
                         label: Text('Give Offer'),
                         onPressed: () {

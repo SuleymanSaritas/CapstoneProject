@@ -46,7 +46,7 @@ class _EditProductPageState extends State<EditProductPage> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ürün başarıyla güncellendi')),
+        SnackBar(content: Text('The product has been successfully updated')),
       );
       Navigator.pop(context);
     }
@@ -56,7 +56,7 @@ class _EditProductPageState extends State<EditProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product Details'),
+        title: Text('Edit Product'),
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
         elevation: 0,
@@ -69,7 +69,7 @@ class _EditProductPageState extends State<EditProductPage> {
             child: Column(
               children: [
                 Text(
-                  'Ürün Adı',
+                  'Product Name',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Container(
@@ -77,14 +77,14 @@ class _EditProductPageState extends State<EditProductPage> {
                   child: TextFormField(
                     initialValue: _productName,
                     decoration: InputDecoration(
-                      labelText: 'Ürün Adı',
+                      labelText: 'Product Name',
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey[200],
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Lütfen bir ürün adı girin';
+                        return 'Please Enter a Product Name';
                       }
                       return null;
                     },
@@ -94,7 +94,7 @@ class _EditProductPageState extends State<EditProductPage> {
                   ),
                 ),
                 Text(
-                  'Ürün Miktarı',
+                  'Product Quantity',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Container(
@@ -102,14 +102,14 @@ class _EditProductPageState extends State<EditProductPage> {
                   child: TextFormField(
                     initialValue: _productQuantity.toString(),
                     decoration: InputDecoration(
-                      labelText: 'Ürün Miktarı',
+                      labelText: 'Product Quantity',
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey[200],
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Lütfen bir ürün miktarı girin';
+                        return 'Please Enter a Product Quantity';
                       }
                       return null;
                     },
@@ -119,7 +119,7 @@ class _EditProductPageState extends State<EditProductPage> {
                   ),
                 ),
                 Text(
-                  'Fiyat',
+                  'Price',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Container(
@@ -127,7 +127,7 @@ class _EditProductPageState extends State<EditProductPage> {
                   child: TextFormField(
                     initialValue: _price,
                     decoration: InputDecoration(
-                      labelText: 'Fiyat (TL)',
+                      labelText: 'Price (TL)',
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey[200],
@@ -135,7 +135,7 @@ class _EditProductPageState extends State<EditProductPage> {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Lütfen bir fiyat girin';
+                        return 'Please Enter a Price';
                       }
                       return null;
                     },
@@ -146,8 +146,12 @@ class _EditProductPageState extends State<EditProductPage> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    textStyle: TextStyle(color: Colors.white),
+                  ),
                   onPressed: _submitForm,
-                  child: Text('Ürünü Güncelle'),
+                  child: Text('Update Product'),
                 ),
               ],
             ),

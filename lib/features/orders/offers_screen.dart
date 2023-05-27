@@ -23,7 +23,7 @@ class _OfferScreenState extends State<OfferScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Teklif Verme Sayfası'),
+        title: Text('Bidding Page'),
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
       ),
@@ -35,48 +35,82 @@ class _OfferScreenState extends State<OfferScreen> {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(bottom: 16),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Teklif Fiyatı',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Bid Price',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Bid Price (TL per kg)',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter bid price';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) => _offerPrice = value,
+                      ),
+                    ),
                   ],
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Lütfen teklif fiyatını girin';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) => _offerPrice = value,
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 16),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Miktar',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Quantity',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Quantity (kg)',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter Quantity';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) => _offerQuantity = value,
+                      ),
+                    ),
                   ],
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Lütfen bir miktar girin';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) => _offerQuantity = value,
                 ),
               ),
               SizedBox(height: 32),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  textStyle: TextStyle(color: Colors.white),
+                ),
                 onPressed: _submitForm,
-                child: Text('Teklif Ver'),
+                child: Text('Give Offer'),
               ),
             ],
           ),
@@ -100,7 +134,7 @@ class _OfferScreenState extends State<OfferScreen> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Teklif başarıyla gönderildi')),
+        SnackBar(content: Text('Offer sent successfully')),
       );
       Navigator.pop(context);
     }

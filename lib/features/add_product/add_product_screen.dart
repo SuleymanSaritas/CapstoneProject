@@ -133,6 +133,10 @@ class _AddProductPageState extends State<AddProductPage> {
                 onPressed: _submitForm,
                 child: Text('Add Product'),
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
                   elevation: 5, // for shadow
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   shape: RoundedRectangleBorder(

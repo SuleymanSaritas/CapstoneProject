@@ -13,12 +13,6 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return Scaffold(
-        // appBar: AppBar(
-        //   title: Text('My Offers'),
-        //   centerTitle: true,
-        //   backgroundColor: Colors.deepOrange[300],
-        //   elevation: 0, // Matlık için gerekli
-        // ),
         body: Center(
           child: Text('You need to sign in to view your offers.'),
         ),
@@ -83,10 +77,25 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
                           .catchError((error) =>
                               print('Failed to delete offer: $error'));
                     },
-                    child: ListTile(
-                      title: Text(productData['name']),
-                      subtitle: Text(
-                          'Kategori: ${productData['category']}\nTeklif: ${data['price']} TL\nAçıklama: ${data['description']}'),
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        title: Text(productData['name']),
+                        subtitle: Text(
+                            'Category: ${productData['category']}\nOffer: ${data['price']} TL\nQuantity: ${data['quantity']}'),
+                      ),
                     ),
                     background: Container(
                       color: Colors.red,

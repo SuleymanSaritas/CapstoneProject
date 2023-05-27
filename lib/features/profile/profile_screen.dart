@@ -115,6 +115,8 @@ class _ProfileState extends State<Profile> {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 1),
         borderRadius: BorderRadius.circular(10),
+        color: Theme.of(context)
+            .cardColor, // cardColor genellikle beyaz (light mode) ya da gri (dark mode) olacaktır.
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -124,12 +126,22 @@ class _ProfileState extends State<Profile> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
+              color: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.color, // Metin rengini mevcut temanın bodyText1 rengine göre ayarlıyoruz.
             ),
           ),
           Expanded(
             child: Text(
               data,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: 16,
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.color, // Metin rengini mevcut temanın bodyText1 rengine göre ayarlıyoruz.
+              ),
             ),
           ),
         ],

@@ -395,29 +395,27 @@ class _VeggieListPageState extends State<VeggieListPage> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
+                      var theme = Theme.of(context);
                       return AlertDialog(
-                        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                        title: Text('Solutions for $_chosenVeggie'),
+                        backgroundColor: theme.dialogBackgroundColor,
+                        title: Text(
+                          'Solutions for $_chosenVeggie',
+                          style: theme.textTheme.titleLarge,
+                        ),
                         content: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.all(
-                                  8.0), // Yazı için marj eklenir.
+                              padding: EdgeInsets.all(8.0),
                               child: Text(
                                 "Your product is $condition . ",
-                                style: TextStyle(
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: theme.textTheme.titleMedium,
                               ),
                             ),
                             ...solutions.map(
                               (solution) => Padding(
-                                padding: EdgeInsets.all(
-                                    8.0), // Buton için marj eklenir.
+                                padding: EdgeInsets.all(8.0),
                                 child: Center(
-                                  // Bu widget, child widget'ını ortalar.
                                   child: ElevatedButton(
                                     onPressed: () {
                                       if (_solutionRoutes
@@ -432,15 +430,11 @@ class _VeggieListPageState extends State<VeggieListPage> {
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xFF8A2BE2),
+                                      backgroundColor: theme.primaryColor,
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'You can $solution with your product',
-                                          style: TextStyle(fontFamily: 'Lato'),
-                                        ),
-                                      ],
+                                    child: Text(
+                                      'You can $solution with your product',
+                                      style: theme.textTheme.bodyLarge,
                                     ),
                                   ),
                                 ),
@@ -451,7 +445,8 @@ class _VeggieListPageState extends State<VeggieListPage> {
                         actions: <Widget>[
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: Text('Close'),
+                            child: Text('Close',
+                                style: theme.textTheme.labelLarge),
                           ),
                         ],
                       );
