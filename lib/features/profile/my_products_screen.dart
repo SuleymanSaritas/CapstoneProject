@@ -63,14 +63,15 @@ class _ProductListPageState extends State<ProductListPage> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text('Ürünü Sil'),
-                    content: Text('Bu ürünü silmek istediğinize emin misiniz?'),
+                    title: Text('Delete Product'),
+                    content:
+                        Text('Are you sure you want to delete this product?'),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('İptal'),
+                        child: Text('Cancel'),
                       ),
                       TextButton(
                         onPressed: () async {
@@ -80,7 +81,7 @@ class _ProductListPageState extends State<ProductListPage> {
                               .delete();
                           Navigator.pop(context);
                         },
-                        child: Text('Sil'),
+                        child: Text('Delete'),
                       ),
                     ],
                   );

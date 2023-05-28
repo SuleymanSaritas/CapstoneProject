@@ -27,7 +27,7 @@ class CookRecipesPage extends StatelessWidget {
             actions: <Widget>[
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.deepPurple,
+                  backgroundColor: Colors.deepPurple,
                 ),
                 child: Text(
                   'Cancel',
@@ -42,7 +42,7 @@ class CookRecipesPage extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.deepPurple,
+                  backgroundColor: Colors.deepPurple,
                 ),
                 child: Center(
                   child: Row(
@@ -312,6 +312,7 @@ class CookRecipesPage extends StatelessWidget {
           itemCount: recipesForProduct.length,
           itemBuilder: (context, index) {
             return Card(
+              color: Theme.of(context).cardColor,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -324,7 +325,7 @@ class CookRecipesPage extends StatelessWidget {
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontFamily: 'Roboto')),
+                            fontFamily: 'Lato')),
                     SizedBox(height: 8),
                     for (var ingredient in recipesForProduct[index]
                         ['ingredients'])
@@ -336,7 +337,7 @@ class CookRecipesPage extends StatelessWidget {
                               fontSize: 18,
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
-                              fontFamily: 'Roboto'),
+                              fontFamily: 'Lato'),
                         ),
                       ),
                     SizedBox(height: 8),
@@ -349,7 +350,7 @@ class CookRecipesPage extends StatelessWidget {
                               fontSize: 18,
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
-                              fontFamily: 'Roboto'),
+                              fontFamily: 'Lato'),
                         ),
                       ),
                   ],

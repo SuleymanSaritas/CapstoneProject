@@ -52,9 +52,18 @@ class MarketPage extends StatelessWidget {
                   return Card(
                     elevation: 5,
                     child: ListTile(
-                      title: Text(data['name']),
+                      title: Text(
+                        data['name'],
+                        style: TextStyle(
+                          color: Colors.black, // Setting text color to black
+                        ),
+                      ),
                       subtitle: Text(
-                          ' ${data['price']} TL - Seller: ${data['userNameSurname']}'),
+                        ' ${data['price']} TL - Seller: ${data['userNameSurname']}',
+                        style: TextStyle(
+                          color: Colors.black, // Setting text color to black
+                        ),
+                      ),
                       trailing: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurple,

@@ -25,165 +25,167 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Register'),
-        centerTitle: true,
-        backgroundColor: Color(0xFF8A2BE2),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 90, 10, 30),
-          child: Form(
-            key: formKey,
+        appBar: AppBar(
+          title: Text('Register'),
+          centerTitle: true,
+          backgroundColor: Color(0xFF8A2BE2),
+        ),
+        body: Container(
+          color: Theme.of(context).cardColor,
+          child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: nameSurnameController,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      cursorColor: Colors.black,
-                      decoration: const InputDecoration(
-                        labelText: "Name/Surname",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      validator: (String? nameSurname) {
-                        if (nameSurname!.isEmpty) {
-                          return "Please write an name/surname ";
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: phoneController,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      cursorColor: Colors.black,
-                      decoration: const InputDecoration(
-                        labelText: "Phone",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      validator: (String? phone) {
-                        if (phone!.isEmpty) {
-                          return "Please write an phone";
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: addressController,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      cursorColor: Colors.white,
-                      decoration: const InputDecoration(
-                        labelText: "Address",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      validator: (String? address) {
-                        if (address!.isEmpty) {
-                          return "Please write an address";
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailController,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      cursorColor: Colors.black,
-                      decoration: const InputDecoration(
-                        labelText: "E-mail",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      validator: (String? mail) {
-                        if (mail!.isEmpty) {
-                          return "Please write an e-mail";
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                      cursorColor: Colors.black,
-                      decoration: const InputDecoration(
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.black),
-                      ),
-                      validator: (String? password) {
-                        if (password!.isEmpty) {
-                          return "please write an password";
-                        }
-                        return null;
-                      },
-                      obscureText:
-                          true, //! prevents the password from appearing.
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        width: 200,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          color: Colors.deepPurple,
-                        ),
-                        alignment: Alignment.center,
-                        child: SignInButtonBuilder(
-                          icon: Icons.person_add,
-                          backgroundColor: Colors.transparent,
-                          fontSize: 18,
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              _register();
+              padding: const EdgeInsets.fromLTRB(10, 90, 10, 30),
+              child: Form(
+                key: formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: nameSurnameController,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                          cursorColor: Colors.black,
+                          decoration: const InputDecoration(
+                            labelText: "Name/Surname",
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          validator: (String? nameSurname) {
+                            if (nameSurname!.isEmpty) {
+                              return "Please write an name/surname ";
                             }
+                            return null;
                           },
-                          text: "Register",
                         ),
-                      ),
+                        TextFormField(
+                          controller: phoneController,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                          cursorColor: Colors.black,
+                          decoration: const InputDecoration(
+                            labelText: "Phone",
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          validator: (String? phone) {
+                            if (phone!.isEmpty) {
+                              return "Please write an phone";
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          controller: addressController,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                          cursorColor: Colors.white,
+                          decoration: const InputDecoration(
+                            labelText: "Address",
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          validator: (String? address) {
+                            if (address!.isEmpty) {
+                              return "Please write an address";
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                          cursorColor: Colors.black,
+                          decoration: const InputDecoration(
+                            labelText: "E-mail",
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          validator: (String? mail) {
+                            if (mail!.isEmpty) {
+                              return "Please write an e-mail";
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          controller: _passwordController,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                          cursorColor: Colors.black,
+                          decoration: const InputDecoration(
+                            labelText: "Password",
+                            labelStyle: TextStyle(color: Colors.black),
+                          ),
+                          validator: (String? password) {
+                            if (password!.isEmpty) {
+                              return "please write an password";
+                            }
+                            return null;
+                          },
+                          obscureText:
+                              true, //! prevents the password from appearing.
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            width: 200,
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              color: Colors.deepPurple,
+                            ),
+                            alignment: Alignment.center,
+                            child: SignInButtonBuilder(
+                              icon: Icons.person_add,
+                              backgroundColor: Colors.transparent,
+                              fontSize: 18,
+                              onPressed: () async {
+                                if (formKey.currentState!.validate()) {
+                                  _register();
+                                }
+                              },
+                              text: "Register",
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          // ignore: unnecessary_null_comparison
+                          child: Text(_success == null ? '' : " "),
+                        ),
+                      ],
                     ),
-                    Container(
-                      alignment: Alignment.center,
-                      // ignore: unnecessary_null_comparison
-                      child: Text(_success == null ? '' : " "),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   @override

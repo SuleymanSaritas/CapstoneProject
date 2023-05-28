@@ -138,126 +138,156 @@ class DonationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Donate Solution for $product',
-            style: TextStyle(fontFamily: 'Lato')),
+            style: TextStyle(fontFamily: 'Lato', color: Colors.black)),
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+      body: Container(
+          color: Theme.of(context).cardColor,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
                 ),
-              ],
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Food Banks to Donate Your Vegetables:',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Lato',
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'The list of food banks is for when the vegetables are not needed:',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Lato',
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 8),
+                      Text('• iHH- insani yardim Vakfi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• Aip- Acil intiyas projesi Vakfi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• Insani insa dernegi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• Uluslararasi Insani Yardim Dernegi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• 1 Tek Lira Dernegi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• lyilikler Yardimlasma Dernegi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• Besir Dernegi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• Vuslat Dernegi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• Aziz Mahmud Hüdayi Vakfi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('• Endes Engellilere Destek ve Yardim Dernegi',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text(
+                          '• TİDER (Basic Needs Association organization) (food bank umberlla org.)',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text(
+                          '• Donate to soup kitchens that aim to serve food to the homeless such as:',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      InkWell(
+                        child: Text(
+                          '“Hayata Sarıl Lokantası” (Embrace Life Restaurant), a restaurant for homeless people in Istanbul',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          launchUrl(Uri.parse(
+                              'https://borgenproject.org/homeless-people-in-istanbul/'));
+                          launchUrl(Uri.parse(
+                              'https://culinarybackstreets.com/cities-category/istanbul/2018/hayata-sarl-lokantas/'));
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        'Donations for Animal Feed:',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Lato',
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'List of where you can donate food for animal feed:',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Lato',
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 8),
+                      Text('Animal Shelter',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text(
+                          '1) Türkiye Hayvanları Koruma Derneği (Animal Shelter)',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('2) Haçiko (Animal Shelter)',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('3) Haytap (Animal Shelter)',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      Text('4) Yedikule Hayvan Barınağı (Animal Shelter)',
+                          style: TextStyle(
+                              fontFamily: 'Lato', color: Colors.black)),
+                      InkWell(
+                        child: Text(
+                          '5) Special "bread dumpsters" located in Istanbul that recycle bread into animal feed',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          // Replace this with your link handling logic
+                          launchUrl(Uri.parse(
+                              'https://www.dailysabah.com/turkey/istanbul/leftover-bread-turned-into-animal-feed-helps-recycling-in-istanbul'));
+                          launchUrl(Uri.parse(
+                              'https://www.oggusto.com/pets/sokak-hayvanlarina-yardim-etmenin-yollari'));
+                        },
+                      ),
+                    ]),
+              ),
             ),
-            padding: const EdgeInsets.all(16.0),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                'Food Banks to Donate Your Vegetables:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lato',
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'The list of food banks is for when the vegetables are not needed:',
-                style: TextStyle(fontSize: 16, fontFamily: 'Lato'),
-              ),
-              SizedBox(height: 8),
-              Text('• iHH- insani yardim Vakfi',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('• Aip- Acil intiyas projesi Vakfi',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('• Insani insa dernegi',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('• Uluslararasi Insani Yardim Dernegi',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('• 1 Tek Lira Dernegi',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('• lyilikler Yardimlasma Dernegi',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('• Besir Dernegi', style: TextStyle(fontFamily: 'Lato')),
-              Text('• Vuslat Dernegi', style: TextStyle(fontFamily: 'Lato')),
-              Text('• Aziz Mahmud Hüdayi Vakfi',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('• Endes Engellilere Destek ve Yardim Dernegi',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text(
-                  '• TİDER (Basic Needs Association organization) (food bank umberlla org.)',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text(
-                  '• Donate to soup kitchens that aim to serve food to the homeless such as:',
-                  style: TextStyle(fontFamily: 'Lato')),
-              InkWell(
-                child: Text(
-                  '“Hayata Sarıl Lokantası” (Embrace Life Restaurant), a restaurant for homeless people in Istanbul',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Lato',
-                      fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  launchUrl(Uri.parse(
-                      'https://borgenproject.org/homeless-people-in-istanbul/'));
-                  launchUrl(Uri.parse(
-                      'https://culinarybackstreets.com/cities-category/istanbul/2018/hayata-sarl-lokantas/'));
-                },
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Donations for Animal Feed:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lato',
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'List of where you can donate food for animal feed:',
-                style: TextStyle(fontSize: 16, fontFamily: 'Lato'),
-              ),
-              SizedBox(height: 8),
-              Text('Animal Shelter', style: TextStyle(fontFamily: 'Lato')),
-              Text('1) Türkiye Hayvanları Koruma Derneği (Animal Shelter)',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('2) Haçiko (Animal Shelter)',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('3) Haytap (Animal Shelter)',
-                  style: TextStyle(fontFamily: 'Lato')),
-              Text('4) Yedikule Hayvan Barınağı (Animal Shelter)',
-                  style: TextStyle(fontFamily: 'Lato')),
-              InkWell(
-                child: Text(
-                  '5) Special "bread dumpsters" located in Istanbul that recycle bread into animal feed',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Lato',
-                      fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  // Replace this with your link handling logic
-                  launchUrl(Uri.parse(
-                      'https://www.dailysabah.com/turkey/istanbul/leftover-bread-turned-into-animal-feed-helps-recycling-in-istanbul'));
-                  launchUrl(Uri.parse(
-                      'https://www.oggusto.com/pets/sokak-hayvanlarina-yardim-etmenin-yollari'));
-                },
-              ),
-            ]),
-          ),
-        ),
-      ),
+          )),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           double? weight = await _inputWeight(context);

@@ -81,7 +81,9 @@ class _EditProductPageState extends State<EditProductPage> {
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey[200],
+                      labelStyle: TextStyle(color: Colors.black),
                     ),
+                    style: TextStyle(color: Colors.black),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please Enter a Product Name';
@@ -106,7 +108,9 @@ class _EditProductPageState extends State<EditProductPage> {
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey[200],
+                      labelStyle: TextStyle(color: Colors.black),
                     ),
+                    style: TextStyle(color: Colors.black),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please Enter a Product Quantity';
@@ -131,8 +135,10 @@ class _EditProductPageState extends State<EditProductPage> {
                       border: OutlineInputBorder(),
                       filled: true,
                       fillColor: Colors.grey[200],
+                      labelStyle: TextStyle(color: Colors.black),
                     ),
                     keyboardType: TextInputType.number,
+                    style: TextStyle(color: Colors.black),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please Enter a Price';

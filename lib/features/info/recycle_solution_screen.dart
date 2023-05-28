@@ -259,36 +259,39 @@ class RecycleSolutionPage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Image.network(recycleSolutionAndImage[2]), // display image url
-              SizedBox(height: 8),
-              Text(recycleSolutionAndImage[0],
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontFamily: 'Roboto')),
-              SizedBox(height: 8),
-              for (var step in recycleSolutionAndImage[1])
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(
-                    step,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black,
-                        fontFamily: 'Roboto'),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
+      body: Container(
+          color: Theme.of(context).cardColor,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Image.network(
+                      recycleSolutionAndImage[2]), // display image url
+                  SizedBox(height: 8),
+                  Text(recycleSolutionAndImage[0],
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontFamily: 'Lato')),
+                  SizedBox(height: 8),
+                  for (var step in recycleSolutionAndImage[1])
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0),
+                      child: Text(
+                        step,
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            fontFamily: 'Lato'),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          )),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           double? weight = await _inputWeight(context);

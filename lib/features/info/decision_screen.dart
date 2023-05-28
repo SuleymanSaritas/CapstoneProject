@@ -124,6 +124,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: DropdownButton<String>(
+                              dropdownColor: Colors.white,
                               value: _chosenVeggie,
                               items: veggieList.map<DropdownMenuItem<String>>(
                                 (String value) {
@@ -209,6 +210,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: DropdownButton<int>(
+                          dropdownColor: Colors.white,
                           value: _color,
                           isExpanded: true,
                           icon: const Icon(Icons.arrow_drop_down),
@@ -267,6 +269,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: DropdownButton<int>(
+                          dropdownColor: Colors.white,
                           value: _smell,
                           isExpanded: true,
                           icon: const Icon(Icons.arrow_drop_down),
@@ -325,6 +328,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: DropdownButton<int>(
+                          dropdownColor: Colors.white,
                           value: _texture,
                           isExpanded: true,
                           icon: const Icon(Icons.arrow_drop_down),
@@ -434,7 +438,9 @@ class _VeggieListPageState extends State<VeggieListPage> {
                                     ),
                                     child: Text(
                                       'You can $solution with your product',
-                                      style: theme.textTheme.bodyLarge,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -454,8 +460,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Color(0xFF8A2BE2), // Set button color to green
+                  backgroundColor: Color(0xFF8A2BE2),
                   elevation: 5, // Add shadow
                   shape: RoundedRectangleBorder(
                     borderRadius:

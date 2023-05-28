@@ -80,7 +80,7 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
                     child: Container(
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -92,9 +92,18 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
                         ],
                       ),
                       child: ListTile(
-                        title: Text(productData['name']),
+                        title: Text(
+                          productData['name'],
+                          style: TextStyle(
+                            color: Colors.black, // Setting text color to black
+                          ),
+                        ),
                         subtitle: Text(
-                            'Category: ${productData['category']}\nOffer: ${data['price']} TL\nQuantity: ${data['quantity']}'),
+                          'Category: ${productData['category']}\nOffer: ${data['price']} TL\nQuantity: ${data['quantity']}',
+                          style: TextStyle(
+                            color: Colors.black, // Setting text color to black
+                          ),
+                        ),
                       ),
                     ),
                     background: Container(

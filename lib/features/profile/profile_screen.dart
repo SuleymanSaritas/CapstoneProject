@@ -126,10 +126,8 @@ class _ProfileState extends State<Profile> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
-              color: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.color, // Metin rengini mevcut temanın bodyText1 rengine göre ayarlıyoruz.
+              color: Colors
+                  .black, // Metin rengini mevcut temanın bodyText1 rengine göre ayarlıyoruz.
             ),
           ),
           Expanded(
@@ -137,10 +135,8 @@ class _ProfileState extends State<Profile> {
               data,
               style: TextStyle(
                 fontSize: 16,
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.color, // Metin rengini mevcut temanın bodyText1 rengine göre ayarlıyoruz.
+                color: Colors
+                    .black, // Metin rengini mevcut temanın bodyText1 rengine göre ayarlıyoruz.
               ),
             ),
           ),
