@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lego_market_app/features/info/donation_screen.dart';
-import 'package:lego_market_app/features/info/recycle_solution_screen.dart';
+import '../info/donation_screen.dart';
+import '../info/recycle_solution_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../authenticate/auth_page/auth_type_selector.dart';
 import '../add_product/add_product_screen.dart';
@@ -47,8 +47,6 @@ class _VeggieListPageState extends State<VeggieListPage> {
       'Sell': () => AddProductPage(),
       'Compost': () => CompostSolutionPage(product: _chosenVeggie),
       'Recycle': () => RecycleSolutionPage(product: _chosenVeggie),
-
-      // Diğer çözümler ve sayfaları buraya ekleyin
     };
     return Scaffold(
       appBar: AppBar(
@@ -80,13 +78,12 @@ class _VeggieListPageState extends State<VeggieListPage> {
             (index) => DropdownMenuItem<int>(
               value: index + 1,
               child: Container(
-                margin:
-                    EdgeInsets.only(left: screenWidth * 0.01), // left margin
+                margin: EdgeInsets.only(left: screenWidth * 0.01),
                 child: Text(
                   (index + 1).toString(),
                   style: TextStyle(
-                    color: Colors.black, // Text color is white
-                    fontWeight: FontWeight.bold, // Text is bold
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -147,14 +144,12 @@ class _VeggieListPageState extends State<VeggieListPage> {
                                         SizedBox(width: 8),
                                         Container(
                                           margin: EdgeInsets.only(
-                                              left: screenWidth *
-                                                  0.01), // Sol taraf boşluğu (1% ekran genişliği)
+                                              left: screenWidth * 0.01),
                                           child: Text(
                                             value,
                                             style: TextStyle(
                                                 color: Colors.black,
-                                                fontWeight: FontWeight
-                                                    .bold), // Metin kalın ve beyaz
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ],
@@ -163,9 +158,8 @@ class _VeggieListPageState extends State<VeggieListPage> {
                                 },
                               ).toList(),
                               hint: Container(
-                                margin: EdgeInsets.only(
-                                    left: screenWidth *
-                                        0.02), // Sol taraf boşluğu (2% ekran genişliği)
+                                margin:
+                                    EdgeInsets.only(left: screenWidth * 0.02),
                                 child: Text("Choose a Product"),
                               ),
                               onChanged: (String? value) {
@@ -180,8 +174,8 @@ class _VeggieListPageState extends State<VeggieListPage> {
                     ],
                   )),
               Container(
-                margin: EdgeInsets.all(
-                    MediaQuery.of(context).size.width * 0.05), // margin eklendi
+                margin:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -223,8 +217,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                           ),
                           items: scoreItems,
                           hint: Container(
-                            margin: EdgeInsets.only(
-                                left: screenWidth * 0.02), // left margin
+                            margin: EdgeInsets.only(left: screenWidth * 0.02),
                             child: Text("Select Color Score"),
                           ),
                           onChanged: (int? value) {
@@ -239,8 +232,8 @@ class _VeggieListPageState extends State<VeggieListPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(
-                    MediaQuery.of(context).size.width * 0.05), // margin eklendi
+                margin:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -282,8 +275,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                           ),
                           items: scoreItems,
                           hint: Container(
-                            margin: EdgeInsets.only(
-                                left: screenWidth * 0.02), // left margin
+                            margin: EdgeInsets.only(left: screenWidth * 0.02),
                             child: Text("Select Smell Score"),
                           ),
                           onChanged: (int? value) {
@@ -298,8 +290,8 @@ class _VeggieListPageState extends State<VeggieListPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(
-                    MediaQuery.of(context).size.width * 0.05), // margin eklendi
+                margin:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -341,8 +333,7 @@ class _VeggieListPageState extends State<VeggieListPage> {
                           ),
                           items: scoreItems,
                           hint: Container(
-                            margin: EdgeInsets.only(
-                                left: screenWidth * 0.02), // left margin
+                            margin: EdgeInsets.only(left: screenWidth * 0.02),
                             child: Text("Select Texture Score"),
                           ),
                           onChanged: (int? value) {
@@ -461,10 +452,9 @@ class _VeggieListPageState extends State<VeggieListPage> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF8A2BE2),
-                  elevation: 5, // Add shadow
+                  elevation: 5,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(10), // Add rounded corners
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: Text('Get Solution'),

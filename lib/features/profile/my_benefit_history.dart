@@ -48,7 +48,6 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
             List<dynamic>? yourBenefits =
                 data!['your_benefit'] as List<dynamic>?;
 
-            // Create a map to store multipliers for each veggie
             Map<String, double> carbonmultipliers = {
               'onion': 0.1,
               'apple': 0.4,
@@ -60,7 +59,6 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
               'bread': 1608,
             };
 
-            // Sort by date
             yourBenefits!.sort((a, b) =>
                 (b['date'] as Timestamp).compareTo(a['date'] as Timestamp));
 
@@ -90,9 +88,7 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
                 rows: yourBenefits.map<DataRow>((benefit) {
                   String action = benefit['action'];
                   String veggie = benefit['veggie'];
-                  double weight =
-                      (benefit['weight'] as num).toDouble(); // Dönüşüm ekledik
-                  // DateTime date = (benefit['date'] as Timestamp).toDate();
+                  double weight = (benefit['weight'] as num).toDouble();
                   DateTime timestampDate =
                       (benefit['date'] as Timestamp).toDate();
 
@@ -107,13 +103,10 @@ class _BenefitHistoryPageState extends State<BenefitHistoryPage> {
 
                   double carbonmultiplier = carbonmultipliers[veggie] ?? 1.0;
                   double watermultiplier = watermultipliers[veggie] ?? 1.0;
-                  // Default multiplier is 1 if not found
-                  // double carbonSaved = weight * carbonmultiplier;
                   double carbonSaved = double.parse(
                       (weight * carbonmultiplier).toStringAsFixed(2));
                   double waterSaved = double.parse(
                       (weight * watermultiplier).toStringAsFixed(2));
-                  // double waterSaved = weight * watermultiplier;
 
                   return DataRow(
                     cells: <DataCell>[

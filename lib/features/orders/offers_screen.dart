@@ -123,7 +123,6 @@ class _OfferScreenState extends State<OfferScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // Teklif verilerini Firestore'a kaydetme
       CollectionReference offers =
           FirebaseFirestore.instance.collection('offers');
       await offers.add({

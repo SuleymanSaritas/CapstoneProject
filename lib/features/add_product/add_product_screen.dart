@@ -37,7 +37,7 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product Details'),
+        title: Text('Add Product'),
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
       ),
@@ -154,11 +154,8 @@ class _AddProductPageState extends State<AddProductPage> {
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
-      // Get current user details
       await getCurrentUserDetails();
 
-      // Save product data to Firestore
       CollectionReference products =
           FirebaseFirestore.instance.collection('products');
       String productId = products.doc().id;

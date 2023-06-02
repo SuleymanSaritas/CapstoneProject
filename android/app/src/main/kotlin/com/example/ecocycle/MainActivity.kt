@@ -1,4 +1,4 @@
-package com.example.lego_market_app
+package com.example.ecocycle
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -55,13 +55,9 @@ class CookRecipesPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                          width:
-                              10), // Bu kod metinle resim arasında biraz boşluk bırakır.
+                      SizedBox(width: 10),
                       Image.asset('assets/images/leaf.png',
-                          width: 20,
-                          height:
-                              20), // Yolu ve boyutu kendi logonuza göre ayarlayın
+                          width: 20, height: 20),
                     ],
                   ),
                 ),
@@ -135,7 +131,6 @@ class CookRecipesPage extends StatelessWidget {
       await _addBenefitToCurrentUser(product!, weight, 'Cook');
     }
 
-    // Recipes for each product, each recipe being a map with title, ingredients, steps and image url
     Map<String, List<Map<String, dynamic>>> cookRecipes = {
       'onion': [
         {
@@ -293,11 +288,8 @@ class CookRecipesPage extends StatelessWidget {
               'https://www.wikihow.com/images/thumb/f/fe/Make-Bread-Crumbs-with-Stale-Bread-Step-2-Version-3.jpg/550px-nowatermark-Make-Bread-Crumbs-with-Stale-Bread-Step-2-Version-3.jpg',
         },
       ],
-
-      // More products here...
     };
 
-    // Get the list of recipes for the selected product
     List<Map<String, dynamic>> recipesForProduct = cookRecipes[product] ?? [];
 
     return Scaffold(
@@ -317,8 +309,7 @@ class CookRecipesPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Image.network(recipesForProduct[index]
-                        ['imageUrl']), // display image url
+                    Image.network(recipesForProduct[index]['imageUrl']),
                     SizedBox(height: 8),
                     Text(recipesForProduct[index]['title'],
                         style: TextStyle(

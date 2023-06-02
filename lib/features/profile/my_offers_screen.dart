@@ -87,7 +87,7 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 5,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: Offset(0, 3),
                           ),
                         ],
                       ),
@@ -95,13 +95,13 @@ class _MyOffersScreenState extends State<MyOffersScreen> {
                         title: Text(
                           productData['name'],
                           style: TextStyle(
-                            color: Colors.black, // Setting text color to black
+                            color: Colors.black,
                           ),
                         ),
                         subtitle: Text(
                           'Category: ${productData['category']}\nOffer: ${data['price']} TL\nQuantity: ${data['quantity']}',
                           style: TextStyle(
-                            color: Colors.black, // Setting text color to black
+                            color: Colors.black,
                           ),
                         ),
                       ),

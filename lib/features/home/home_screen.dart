@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lego_market_app/features/info/news_screen.dart';
-import 'package:lego_market_app/features/orders/market_screen.dart';
-import 'package:lego_market_app/features/profile/profile_screen.dart';
-import 'package:lego_market_app/features/info/decision_screen.dart';
+import '../info/news_screen.dart';
+import '../orders/market_screen.dart';
+import '../profile/profile_screen.dart';
+import '../info/decision_screen.dart';
 
 class NavigationPage extends StatelessWidget {
   @override
@@ -26,13 +26,13 @@ class NavigationPage extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset: Offset(0, 3),
                       ),
                     ],
                   ),
                   child: ClipRRect(
                     child: Image.asset(
-                      'assets/images/splash22.png', //Replace with your logo asset path
+                      'assets/images/splash22.png',
                       height: 200,
                     ),
                     borderRadius: BorderRadius.circular(15.0),

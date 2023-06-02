@@ -124,10 +124,8 @@ class ProductDetailPage extends StatelessWidget {
                                       productQuantity! - offerQuantity;
 
                                   if (newProductQuantity <= 0) {
-                                    // If the quantity goes 0 or less, delete the product.
                                     await products.doc(productId).delete();
                                   } else {
-                                    // Else update the quantity of the product.
                                     await products.doc(productId).update({
                                       'quantity': newProductQuantity,
                                     });
@@ -143,7 +141,6 @@ class ProductDetailPage extends StatelessWidget {
                               IconButton(
                                 icon: Icon(Icons.cancel, color: Colors.red),
                                 onPressed: () async {
-                                  // Delete the rejected offer.
                                   await FirebaseFirestore.instance
                                       .collection('offers')
                                       .doc(offer.id)

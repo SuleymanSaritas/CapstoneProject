@@ -12,7 +12,6 @@ class CompostSolutionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Product compost solutions, title and image url holding a dictionary
     Future<void> _showBenefitDialog(BuildContext context) async {
       return showDialog<void>(
         context: context,
@@ -57,13 +56,9 @@ class CompostSolutionPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                          width:
-                              10), // Bu kod metinle resim arasında biraz boşluk bırakır.
+                      SizedBox(width: 10),
                       Image.asset('assets/images/leaf.png',
-                          width: 20,
-                          height:
-                              20), // Yolu ve boyutu kendi logonuza göre ayarlayın
+                          width: 20, height: 20),
                     ],
                   ),
                 ),
@@ -190,7 +185,6 @@ class CompostSolutionPage extends StatelessWidget {
       ]
     };
 
-    // Get the compost solution, title and image url of the selected product
     List<dynamic> compostSolutionAndImage =
         compostSolutions[product] ?? ['', [], ''];
 
@@ -207,8 +201,7 @@ class CompostSolutionPage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Image.network(
-                      compostSolutionAndImage[2]), // display image url
+                  Image.network(compostSolutionAndImage[2]),
                   SizedBox(height: 8),
                   Text(compostSolutionAndImage[0],
                       style: TextStyle(

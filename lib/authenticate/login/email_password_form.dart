@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lego_market_app/core/components/navigator/push_replacement.dart';
-import 'package:lego_market_app/features/home/home_screen.dart';
+import 'package:ecocycle/core/components/navigator/push_replacement.dart';
+import 'package:ecocycle/features/home/home_screen.dart';
 
 class EmailPasswordForm extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
     return Form(
       key: _formKey,
       child: Card(
-        elevation: 10, // Gölge eklendi
+        elevation: 10,
         color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 30, 16, 20),
@@ -39,7 +39,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
                   alignment: Alignment.center,
                 ),
               ),
-              SizedBox(height: 16), // TextFormField'lar arasına boşluk eklendi
+              SizedBox(height: 16),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: _emailController,
@@ -48,14 +48,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
                   labelStyle: TextStyle(color: Colors.black),
                   labelText: "E-mail",
                   hintStyle: TextStyle(color: Colors.black),
-                  fillColor:
-                      Colors.grey[300], // Border ve içerik rengi değiştirildi
-                  // focusedBorder: OutlineInputBorder(
-                  //   borderSide: BorderSide(color: Colors.black),
-                  // ),
-                  // enabledBorder: OutlineInputBorder(
-                  //   borderSide: BorderSide(color: Colors.black),
-                  // ),
+                  fillColor: Colors.grey[300],
                 ),
                 validator: (String? mail) {
                   if (mail!.isEmpty) return "Please write an e-mail";
@@ -71,24 +64,15 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
                 decoration: InputDecoration(
                   labelStyle: TextStyle(color: Colors.black),
                   labelText: "Password",
-                  fillColor:
-                      Colors.grey[300], // Border ve içerik rengi değiştirildi
-                  // focusedBorder: OutlineInputBorder(
-                  //   borderSide: BorderSide(color: Colors.black),
-                  // ),
-                  // enabledBorder: OutlineInputBorder(
-                  //   borderSide: BorderSide(color: Colors.black),
-                  // ),
+                  fillColor: Colors.grey[300],
                 ),
                 validator: (String? password) {
                   if (password!.isEmpty) return "Please type a password";
                   return null;
                 },
-                obscureText: true, //! prevents passwords from appearing.
+                obscureText: true,
               ),
-              SizedBox(
-                  height:
-                      24), // TextFormField'lar ile butonlar arasına boşluk eklendi
+              SizedBox(height: 24),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 alignment: Alignment.center,
@@ -115,7 +99,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
                       TextButton.styleFrom(backgroundColor: Colors.deepPurple),
                 ),
               ),
-              SizedBox(height: 16), // Butonlar arasına boşluk eklendi
+              SizedBox(height: 16),
             ],
           ),
         ),
@@ -146,7 +130,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
       );
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
-      // ignore: deprecated_member_use
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("${e.message}"),
@@ -154,7 +138,7 @@ class EmailPasswordFormState extends State<EmailPasswordForm> {
       );
     } catch (e) {
       debugPrint(e.toString());
-      // ignore: deprecated_member_use
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:

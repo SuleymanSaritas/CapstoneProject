@@ -55,13 +55,9 @@ class DonationPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                          width:
-                              10), // Bu kod metinle resim arasında biraz boşluk bırakır.
+                      SizedBox(width: 10),
                       Image.asset('assets/images/leaf.png',
-                          width: 20,
-                          height:
-                              20), // Yolu ve boyutu kendi logonuza göre ayarlayın
+                          width: 20, height: 20),
                     ],
                   ),
                 ),
@@ -156,7 +152,7 @@ class DonationPage extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: Offset(0, 3),
                     ),
                   ],
                 ),
@@ -277,7 +273,6 @@ class DonationPage extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         onTap: () {
-                          // Replace this with your link handling logic
                           launchUrl(Uri.parse(
                               'https://www.dailysabah.com/turkey/istanbul/leftover-bread-turned-into-animal-feed-helps-recycling-in-istanbul'));
                           launchUrl(Uri.parse(

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:lego_market_app/features/home/home_screen.dart';
+import '../../features/home/home_screen.dart';
 
 class RegisterPage extends StatefulWidget {
   final firestore = FirebaseFirestore.instance;
@@ -21,7 +21,6 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _success = true;
   final firestore = FirebaseFirestore.instance;
 
-  // late String _message;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,8 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
                             return null;
                           },
-                          obscureText:
-                              true, //! prevents the password from appearing.
+                          obscureText: true,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(18.0),
@@ -175,7 +173,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         Container(
                           alignment: Alignment.center,
-                          // ignore: unnecessary_null_comparison
                           child: Text(_success == null ? '' : " "),
                         ),
                       ],

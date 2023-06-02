@@ -35,8 +35,6 @@ class _EditProductPageState extends State<EditProductPage> {
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
-      // Ürün verilerini Firestore'da güncelleme
       CollectionReference products =
           FirebaseFirestore.instance.collection('products');
       await products.doc(widget.productId).update({

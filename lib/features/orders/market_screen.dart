@@ -55,13 +55,13 @@ class MarketPage extends StatelessWidget {
                       title: Text(
                         data['name'],
                         style: TextStyle(
-                          color: Colors.black, // Setting text color to black
+                          color: Colors.black,
                         ),
                       ),
                       subtitle: Text(
                         ' ${data['price']} TL - Seller: ${data['userNameSurname']}',
                         style: TextStyle(
-                          color: Colors.black, // Setting text color to black
+                          color: Colors.black,
                         ),
                       ),
                       trailing: ElevatedButton.icon(

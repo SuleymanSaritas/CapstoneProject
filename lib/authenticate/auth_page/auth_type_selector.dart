@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lego_market_app/core/components/navigator/push.dart';
+
+import '../../core/components/navigator/push.dart';
 import '../login/email_password_form.dart';
 import '../register/register_page.dart';
 
@@ -18,8 +19,7 @@ class AuthTypeSelector extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width:
-                        100.0, // you can adjust width and height to fit the logo
+                    width: 100.0,
                     height: 100.0,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -41,8 +41,7 @@ class AuthTypeSelector extends StatelessWidget {
                   SizedBox(height: 20),
                   EmailPasswordForm(),
                   Container(
-                    margin:
-                        const EdgeInsets.only(top: 20.0), // Margin added here
+                    margin: const EdgeInsets.only(top: 20.0),
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,

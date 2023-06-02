@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lego_market_app/core/components/navigator/pop.dart';
-import 'package:lego_market_app/core/components/navigator/push.dart';
+import 'package:ecocycle/core/components/navigator/pop.dart';
+import 'package:ecocycle/core/components/navigator/push.dart';
 
 import '../../authenticate/auth_page/auth_type_selector.dart';
 import '../add_product/add_product_screen.dart';
@@ -10,7 +10,6 @@ import '../home/home_screen.dart';
 import '../profile/my_products_screen.dart';
 import 'my_benefit_history.dart';
 import 'my_offers_screen.dart';
-// import 'profile_build_data.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -58,8 +57,7 @@ class _ProfileState extends State<Profile> {
           children: [
             Container(
               width: double.infinity,
-              child: Image.asset(
-                  'assets/images/your_image.png'), // <-- Change 'assets/your_image.png' with your image path
+              child: Image.asset('assets/images/your_image.png'),
             ),
             Container(
               padding: EdgeInsets.all(8),
@@ -115,8 +113,7 @@ class _ProfileState extends State<Profile> {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 1),
         borderRadius: BorderRadius.circular(10),
-        color: Theme.of(context)
-            .cardColor, // cardColor genellikle beyaz (light mode) ya da gri (dark mode) olacaktır.
+        color: Theme.of(context).cardColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -126,8 +123,7 @@ class _ProfileState extends State<Profile> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
-              color: Colors
-                  .black, // Metin rengini mevcut temanın bodyText1 rengine göre ayarlıyoruz.
+              color: Colors.black,
             ),
           ),
           Expanded(
@@ -135,8 +131,7 @@ class _ProfileState extends State<Profile> {
               data,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors
-                    .black, // Metin rengini mevcut temanın bodyText1 rengine göre ayarlıyoruz.
+                color: Colors.black,
               ),
             ),
           ),
@@ -158,13 +153,13 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.add_box,
-            size: 20, // İkon boyutunu küçült
+            size: 20,
             color: whiteColor,
           ),
           title: Text(
             "Add Product",
             style: TextStyle(
-              fontSize: 16, // Yazı boyutunu küçült
+              fontSize: 16,
               color: whiteColor,
             ),
           ),
@@ -191,13 +186,13 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.local_offer,
-            size: 20, // İkon boyutunu küçült
+            size: 20,
             color: whiteColor,
           ),
           title: Text(
             "My Offers",
             style: TextStyle(
-              fontSize: 16, // Yazı boyutunu küçült
+              fontSize: 16,
               color: whiteColor,
               fontFamily: 'Roboto',
             ),
@@ -225,13 +220,13 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.shopping_bag,
-            size: 20, // İkon boyutunu küçült
+            size: 20,
             color: whiteColor,
           ),
           title: Text(
             "My Products",
             style: TextStyle(
-              fontSize: 16, // Yazı boyutunu küçült
+              fontSize: 16,
               color: whiteColor,
             ),
           ),
@@ -256,7 +251,7 @@ class _ProfileState extends State<Profile> {
               title: const Text("Are you sure you want to log out?"),
               content: Icon(
                 Icons.warning,
-                size: 30, // İkon boyutunu küçült
+                size: 30,
                 color: redColor,
               ),
               actions: <Widget>[
@@ -293,13 +288,13 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.logout,
-            size: 20, // İkon boyutunu küçült
+            size: 20,
             color: whiteColor,
           ),
           title: Text(
             "Log out",
             style: TextStyle(
-              fontSize: 16, // Yazı boyutunu küçült
+              fontSize: 16,
               color: whiteColor,
             ),
           ),
@@ -326,13 +321,13 @@ class _ProfileState extends State<Profile> {
         child: ListTile(
           leading: Icon(
             Icons.history,
-            size: 20, // İkon boyutunu küçült
+            size: 20,
             color: whiteColor,
           ),
           title: Text(
             "My Benefit History",
             style: TextStyle(
-              fontSize: 16, // Yazı boyutunu küçült
+              fontSize: 16,
               color: whiteColor,
             ),
           ),
@@ -363,7 +358,7 @@ class _ProfileState extends State<Profile> {
         ),
         child: Icon(
           Icons.account_circle_rounded,
-          size: 70, // İkon boyutunu küçült
+          size: 70,
           color: whiteColor,
         ),
       ),
@@ -377,21 +372,4 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
-  // AppBar mainAppBarExt() {
-  //   return AppBar(
-  //     title: Text(
-  //       "Profile",
-  //       style: TextStyle(
-  //         fontSize: 20, // Yazı boyutunu küçült
-  //         fontFamily: 'Roboto',
-  //       ),
-  //     ),
-  //     centerTitle: true,
-  //     backgroundColor: darkerOrangeColor,
-  //     elevation: 0,
-  //     automaticallyImplyLeading: false,
-  //     leading: CustomBackButton(),
-  //   );
-  // }
 }
